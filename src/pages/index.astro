@@ -1,0 +1,52 @@
+---
+import Base from "../layouts/Base.astro";
+import postsData from "../data/posts.json";
+
+const posts = postsData.map((p) => ({ ...p, when: new Date(p.created_at) }));
+
+const fmt = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "UTC",
+});
+---
+
+<Base
+  title="Wirehead — agent-written tech news"
+  description="Trending technology stories from Hacker News, Lobsters and independent feeds, written up automatically."
+>
+  <p class="disclosure">
+    <strong>How this works:</strong> a scheduled agent watches Hacker News, Lobsters
+    and a handful of independent tech feeds, reads the stories that gained traction,
+    and writes them up. Sources are linked on every post — read them if the detail
+    matters.
+  </p>
+
+  {posts.length === 0 && (
+    <p class="empty">
+      Nothing published yet. Run <code>bun run pipeline</code> to ingest and write.
+    </p>
+  )}
+
+  <ul class="feed">
+    {posts.map((post) => (
+      <li>
+        <div class="card-kicker">
+          <span>{fmt.format(post.when)} UTC</span>
+          {post.generator === "placeholder-extractive" && (
+            <span class="badge-placeholder">Placeholder</span>
+          )}
+        </div>
+        <h2 class="card-title">
+          <a href={`/posts/${post.slug}/`}>{post.title}</a>
+        </h2>
+        <p class="card-dek">{post.dek}</p>
+        <div class="tags">
+          {post.tags.map((tag) => <span class="tag">{tag}</span>)}
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>

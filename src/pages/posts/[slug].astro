@@ -1,0 +1,57 @@
+---
+import { marked } from "marked";
+import Base from "../../layouts/Base.astro";
+import postsData from "../../data/posts.json";
+
+export function getStaticPaths() {
+  return postsData.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { tags, sources } = post;
+const html = marked.parse(post.body, { async: false }) as string;
+
+const when = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  timeZone: "UTC",
+}).format(new Date(post.created_at));
+---
+
+<Base title={`${post.title} — Wirehead`} description={post.dek}>
+  <a class="back" href="/">&larr; All stories</a>
+
+  <article>
+    <div class="article-head">
+      <div class="card-kicker">
+        <span>{when} UTC</span>
+        <span>Written by {post.generator}</span>
+        {post.generator === "placeholder-extractive" && (
+          <span class="badge-placeholder">Placeholder</span>
+        )}
+      </div>
+      <h1 class="article-title">{post.title}</h1>
+      <p class="article-dek">{post.dek}</p>
+    </div>
+
+    <div class="prose" set:html={html} />
+
+    <div class="tags">
+      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    </div>
+
+    <div class="sources">
+      <h2>Sources</h2>
+      <ul>
+        {sources.map((source) => (
+          <li>
+            <a href={source.url} rel="noopener nofollow">{source.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </article>
+</Base>

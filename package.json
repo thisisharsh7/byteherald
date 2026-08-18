@@ -1,0 +1,22 @@
+{
+  "name": "agent-news",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "ingest": "bun run scripts/ingest.ts",
+    "write": "bun run scripts/write.ts",
+    "export": "bun run scripts/export.ts",
+    "pipeline": "bun run scripts/pipeline.ts",
+    "refresh": "bun run pipeline && bun run build",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "bunx wrangler pages deploy dist --project-name wirehead",
+    "publish": "bun run refresh && bun run deploy"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.117.1",
+    "astro": "^7.2.2",
+    "marked": "^18.0.9"
+  }
+}

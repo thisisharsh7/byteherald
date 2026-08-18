@@ -1,0 +1,215 @@
+[
+  {
+    "slug": "gimp-is-replacing-xcf-with-a-zipped-xml-project-format-49326156",
+    "title": "GIMP is replacing XCF with a zipped-XML project format",
+    "dek": "An August development update details work toward GIMP 3.3.2, including a new project file format, PSD Descriptor import, and native file dialogs.",
+    "body": "GIMP's development update for August 2026 says the biggest current effort is a new project file format to succeed XCF, which has been the program's primary format since 1997. Maintainer Jehan is designing it as a \"zipped XML\" structure rather than XCF's single binary blob. The stated motivation is practical: XCF struggles with very large or complex projects, including the multi-page and animation features planned for GIMP 3.6, and rewriting the whole file on every save blocks features like auto-save. The new layout allows updating only the parts that changed.\n\nFor anyone with an archive of .xcf files, the compatibility story is explicit — GIMP will keep loading XCF in all future versions, and the team cites a 1998 logo file that still renders identically today. The catch is forward-looking: new features will only be saveable and loadable in the new format once it's finalized.\n\nThe other notable item is PSD interoperability. Jacob Boerema implemented import support for Descriptors, an under-documented Adobe text format that modern PSDs use for many features and which isn't covered by the public spec's last 2019 revision. With Descriptors readable, PSD text layers are now editable, some adjustment layers and layer styles map to GEGL equivalents, and solid color shapes import as vector layers. Separately, Alx Sa has started porting file dialogs to GTK3's native chooser, so Windows, macOS, and KDE users see their platform's dialog.\n\nTiming is unsettled. There is no 3.3.2 development release yet — several roadmap items remain in progress — and the new format's technical details are still being designed. A stable 3.2.6 is planned \"in the coming weeks\" with bug fixes rather than these features.",
+    "tags": [
+      "gimp",
+      "open-source",
+      "file-formats",
+      "graphics"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "gimp.org",
+        "url": "https://www.gimp.org/news/2026/08/16/dev-update-august-2026/"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49326156"
+      }
+    ],
+    "created_at": 1786977629899
+  },
+  {
+    "slug": "the-small-model-trade-reasoning-in-facts-out-49322695",
+    "title": "The Small-Model Trade: Reasoning In, Facts Out",
+    "dek": "A blog post argues labs are deliberately stripping world knowledge out of model weights to buy cheap reasoning, and that the harness picks up the slack.",
+    "body": "A post by Walter van der Giessen, widely discussed on Hacker News, argues that the collapse in per-token compute at the frontier is not free efficiency but a deliberate trade: labs are cutting world knowledge out of weights and keeping reasoning procedures.\n\nThe evidence he assembles is the gap between benchmark families. GLM-5.2 scores 99.2% on AIME 2026 with roughly 40 billion parameters active per token; Qwen3.5 hits 91.3% with 17 billion; DeepSeek V4-Flash runs 13 billion active. On plain factual recall the picture inverts — SimpleQA's leader is Gemini 2.5 Pro at 53%, and Artificial Analysis puts Qwen3.5 4B and 9B at 80–82% hallucination rates on its knowledge benchmark.\n\nThe mechanism he offers is storage economics, citing the \"Physics of Language Models\" work at roughly two bits of factual knowledge per parameter. Facts are expensive to store and cheap to retrieve; reasoning is a small set of reusable procedures that distills well. Facts also rot — a training run costs months and hundreds of millions, and its beliefs about the JavaScript ecosystem are stale on arrival. Procedures don't.\n\nFor builders, the consequence is that the harness becomes load-bearing: retrieval, tool calls, docs on disk. A coding agent greps `node_modules` rather than recalling an API. The upside he emphasizes is auditability — a wrong fact in a knowledge base has an address and a regression test; a wrong fact in weights has neither.\n\nThe forward-looking part is explicitly the author's prediction, not a reported plan: frontier-quality reasoning on a single 24GB consumer GPU once expert layers holding facts become optional. Whether stripped-down models degrade gracefully without tools is the open question, and the post concedes retrieval does not reach zero hallucination.",
+    "tags": [
+      "ai",
+      "llms",
+      "local-inference",
+      "rag"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "w4g1.dev",
+        "url": "https://w4g1.dev/blog/models-are-getting-dumber-on-purpose"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49322695"
+      }
+    ],
+    "created_at": 1786977611415
+  },
+  {
+    "slug": "c3-s-creator-says-calling-it-a-c-alternative-was-a-marketing-wpyhdh",
+    "title": "C3's creator says calling it a \"C alternative\" was a marketing mistake",
+    "dek": "The author of the C3 language argues the phrase means something narrower today than it did when he started, and is repositioning the project as a general-purpose application language.",
+    "body": "The creator of C3 published a post arguing that marketing the language as a \"C alternative\" was a fundamental error, because that phrase now signals a narrower set of use cases than he intended.\n\nHis reasoning is generational. He remembers C as an application language, back when Turbo Pascal and C were what you reached for on 16-bit home computers to write whole programs. Today, he writes, \"C alternative\" is read as \"a programming language for what C is predominantly used for today\" — OS development, embedded work, high-performance libraries and backends. People write databases in C, not video editors. So when he pitched C3 as \"a C-like for people who like C,\" the audience heard systems programming, while he meant something closer to a replacement for the range from C through C++ to Swift.\n\nThe post also makes a design argument that explains the positioning. He blames a chunk of his own slowdown over the years on \"methods first\" thinking — `game.run()` rather than `run(&game)` — because binding behavior to an owning class forces architecture decisions up front and makes later restructuring expensive. He credits a procedural-in-practice PHP contract with showing him the object-oriented layers were never needed. C3 does have methods, he notes, mainly to avoid needing function overloading for things like `foo.to_string()`, which he concedes makes it harder to pull people out of that mindset.\n\nHe frames Zig's goal as replacing C where C is used now, and cites Odin as starting people in a better mindset. This is one designer's retrospective on his own project's framing, not a benchmark or a release; nothing in the post claims C3's implementation changes as a result.",
+    "tags": [
+      "programming-languages",
+      "c",
+      "software-design"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "c3-lang.org",
+        "url": "https://c3-lang.org/blog/i_thought_i_was_building_a_c_replacement/"
+      },
+      {
+        "label": "lobsters discussion",
+        "url": "https://lobste.rs/s/wpyhdh/i_thought_i_was_building_c_replacement_i"
+      }
+    ],
+    "created_at": 1786977591575
+  },
+  {
+    "slug": "a-satirical-landing-page-that-roasts-ai-generated-web-design-ii5tun",
+    "title": "A Satirical Landing Page That Roasts AI-Generated Web Design",
+    "dek": "A parody page called \"Every Fucking Website — Slop Edition\" catalogues the visual tics that have converged into a single default look.",
+    "body": "Someone built a single-page parody, \"Every Fucking Website — Slop Edition,\" that assembles the stock components of the modern generated landing page and labels each one for what it is. It reached the Lobsters front page with 85 points and 38 comments, tagged satire, vibecoding, and web.\n\nThe page is the argument. It opens with a status indicator the author annotates as \"[l]ive status that means literally nothing,\" then works through an instrument-serif headline, randomly italicised phrases, a three-word tagline separated by interpuncts, a primary CTA paired with a \"[s]econdary CTA nobody clicks,\" a `curl | sh` install snippet with a copy button, and a row of placeholder logos captioned as six companies from the same YC cohort. The em dash gets called out by name as load-bearing.\n\nFor anyone shipping a product page, the useful part is the checklist. These elements are not bad individually — they are conventions that work, which is why generators reproduce them, and why a page assembled from them now reads as generated regardless of who wrote it. Fake liveness indicators and untrusted social proof are the two items that shade from cliché into misleading. The install-command gag lands a real point too: a page that looks templated is a weaker place to ask someone to pipe a script into a shell.\n\nThe piece makes no claim about how widespread the pattern is, and offers no data. It is a joke with a taxonomy attached, and the taxonomy is the part worth keeping.",
+    "tags": [
+      "web",
+      "design",
+      "ai",
+      "satire"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "op.tngl.io",
+        "url": "https://op.tngl.io/every-fucking-website/"
+      },
+      {
+        "label": "lobsters discussion",
+        "url": "https://lobste.rs/s/ii5tun/every_fucking_website"
+      }
+    ],
+    "created_at": 1786977572237
+  },
+  {
+    "slug": "the-risc-v-argument-looks-different-from-trinidad-49321717",
+    "title": "The RISC-V Argument Looks Different From Trinidad",
+    "dek": "An embedded engineer in Trinidad and Tobago answers Dmitry Grinberg's RISC-V critique by pricing the whole stack, shipping included.",
+    "body": "Armstrong Subero, an embedded engineer working out of Trinidad and Tobago, published a response to Dmitry Grinberg's widely-shared critique \"RISC-V: They Should Have Known Better.\" He concedes several of Grinberg's technical points — compressed store offsets are strange, Zicsr should not be a separate extension you have to remember to request — and says he has hit every one of them writing a book on the CH32V003.\n\nHis disagreement is with the framing. Grinberg's central claim is that the needs of a high-end CPU and a cost-saving microcontroller core are diametrically opposed, so no single ISA serves both. Subero's counter is that Grinberg's own article derives requirements for a cheap core, lands on RV32EC, and concedes RISC-V will own that segment — then spends the rest of the piece annoyed the chip exists.\n\nThe argument that will land hardest with builders is the logistics one. Subero says shipping a dollar chip to his location costs US $60–200, that a PCB sponsor turned him down purely on shipping, and that distributors have refused orders based on location or name. Against that, he reports covering a full vertical stack — CH32V003 at ten cents, a dual-core CH32H417 board at $20, a Baochip Dabao at $9.50 — for under US $100 total, versus roughly $600 for a Segger J-Link alone on the ARM side.\n\nThe technical claims are one engineer's account, not independently verified, and the article text available here is truncated before his final section. The costs are his own, from one country.",
+    "tags": [
+      "risc-v",
+      "embedded",
+      "hardware"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "rvembedded.com",
+        "url": "https://rvembedded.com/blog_post/12/"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49321717"
+      }
+    ],
+    "created_at": 1786977208177
+  },
+  {
+    "slug": "stripe-reportedly-buys-ai-gateway-openrouter-for-over-7b-49323381",
+    "title": "Stripe reportedly buys AI gateway OpenRouter for over $7B",
+    "dek": "Bloomberg reports Stripe has finalized a deal for OpenRouter at more than $7 billion, roughly five times the startup's May valuation.",
+    "body": "Stripe has finalized a deal to acquire OpenRouter for more than $7 billion, according to a Bloomberg report relayed by TechCrunch. The Wall Street Journal reported the two companies were in talks last month. A Stripe spokesperson told TechCrunch it does not comment on rumors or speculation, and neither company has confirmed the deal.\n\nOpenRouter sells a single API endpoint that routes requests across many model providers, letting developers pick a model per task based on capability and cost. The company says it serves 8 million users and offers access to more than 400 models. In May it raised a $113 million Series B at a reported $1.3 billion valuation, with investors including Sequoia, Andreessen Horowitz, Menlo Ventures, and Alphabet's CapitalG. CEO Alex Atallah has described the company as \"Stripe for AI\" — one access point, no lock-in.\n\nFor anyone building on OpenRouter, the practical questions are about what happens to that positioning. A neutral routing layer is valuable precisely because it is not aligned with any one model vendor or payments stack; ownership by Stripe puts inference metering and billing under the same roof, which could be convenient or could narrow the roadmap depending on how it's run. Nothing in the reporting addresses pricing, API stability, or whether OpenRouter continues to operate independently.\n\nThe price is also worth noting on its own: roughly a 5x step up from a valuation set three months earlier, at least as those figures are reported. Details beyond the headline number are limited, and the deal remains unconfirmed by either party.",
+    "tags": [
+      "ai",
+      "startups",
+      "acquisitions",
+      "developer-tools"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "techcrunch.com",
+        "url": "https://techcrunch.com/2026/08/16/stripe-will-reportedly-acquire-ai-gateway-startup-openrouter-for-7b/"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49323381"
+      }
+    ],
+    "created_at": 1786977183425
+  },
+  {
+    "slug": "gruber-claude-s-text-watermark-trades-word-choice-for-compli-49324087",
+    "title": "Gruber: Claude's text watermark trades word choice for compliance",
+    "dek": "Anthropic's forthcoming text watermark works by biasing token selection, and John Gruber argues that makes every output slightly worse on purpose.",
+    "body": "Anthropic has published a second document, \"How Claude's Text Watermark Works,\" explaining that its EU-mandated text watermarking is a steganographic scheme applied at inference time rather than hidden Unicode characters. John Gruber, who had speculated about invisible characters, walks through the mechanism: at each token decision point, candidate words are sorted deterministically into \"green\" and \"red\" sets, and the model is nudged toward green. No word is permanently preferred or avoided, and only someone holding Anthropic's secret key can check which set a token fell into. Detection is statistical, so it needs enough text to reach confidence — the EU Code of Practice on Transparency of AI-Generated Content applies to output longer than 200 tokens, roughly 150 words.\n\nGruber's objection is that synonyms are not interchangeable, so biasing token choice means Claude will sometimes pick a slightly worse word for reasons that serve compliance rather than the user — including in private conversations no one else will read.\n\nFor builders, the practical points are the asymmetry and the fragility. Each provider can only detect its own marks: Claude cannot identify Gemini output, and vice versa. Per Ben Thompson's summary that Gruber quotes, the regulation also expects providers to forbid watermark removal in their terms of service and to survive OCR, copy-paste, and translation. Gruber and James Padolsey both argue the scheme fails at the hard case — anyone determined to pass off AI text can paraphrase through a non-compliant tool — while flagging ordinary assistive use. Padolsey adds that Anthropic's blanket, model-level approach looks broader than the law's minimum.\n\nHow much quality actually degrades is unquantified in the piece; the claim rests on the mechanism, not on measurements.",
+    "tags": [
+      "ai",
+      "policy",
+      "anthropic",
+      "regulation"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "daringfireball.net",
+        "url": "https://daringfireball.net/2026/08/anthropics_watermark_text_adulteration_in_claude_is_a_perversion_of_writing"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49324087"
+      }
+    ],
+    "created_at": 1786977164196
+  },
+  {
+    "slug": "github-degraded-20-error-rates-across-web-api-and-actions-49330684",
+    "title": "GitHub degraded: ~20% error rates across web, API, and Actions",
+    "dek": "GitHub reported elevated error rates on August 17, 2026, hitting Issues, Pull Requests, Actions, Webhooks, and API traffic while the cause was still under investigation.",
+    "body": "GitHub opened an incident at 13:40 UTC on August 17, 2026, saying it was investigating degraded performance across some services. Over the following twenty minutes the status page added API Requests, Actions, Webhooks, Issues, and Pull Requests to the affected list. By 14:04 UTC the company put numbers on it: roughly 20% error rates for web experiences and API traffic, and roughly 50% for archive downloads and raw repository content downloads.\n\nThe higher failure rate on archive and raw content downloads is the part most likely to bite automated systems. Anything that fetches a tarball or a raw file during a build — dependency installs pointing at GitHub, container images pulling source, scripts curling a raw URL — sees one in two attempts fail rather than one in five. Combined with degraded Actions and Webhooks, that means CI pipelines can fail in ways that look like broken code rather than an upstream outage, and webhook-triggered deploys may simply not fire.\n\nAt the time of the last update in the report, the root cause was still unknown. GitHub said investigations were ongoing and that it would continue posting updates. The report does not state a resolution time, a trigger, or whether any data or queued events were lost, and it gives no indication of which underlying systems were implicated.\n\nThe practical read for anyone shipping today: treat retries on GitHub fetches as expected, and check the status page before debugging a red build.",
+    "tags": [
+      "devops",
+      "outage",
+      "ci",
+      "github"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "githubstatus.com",
+        "url": "https://www.githubstatus.com/incidents/zkxwbgr0cnmx"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49330684"
+      }
+    ],
+    "created_at": 1786977120917
+  },
+  {
+    "slug": "qwen-3-8-27b-ships-with-its-reasoning-dial-cranked-to-max-49324985",
+    "title": "Qwen 3.8 27B ships with its reasoning dial cranked to max",
+    "dek": "Simon Willison finds Alibaba's new 27B local model highly capable, but says its default 'xhigh' reasoning effort makes it impractical out of the box.",
+    "body": "Alibaba's Qwen lab released Qwen 3.8 27B, an Apache 2 licensed vision-capable model that runs from a 17GB Q4_K_M quantized file. Simon Willison ran it on a 128GB M5 Max MacBook Pro and an NVIDIA DGX Spark and reports it can generate code, call tools, and annotate images — but that the shipped default reasoning effort of `xhigh` is a poor starting point.\n\nThe concrete failure mode is worth knowing before you download it. At the default setting, the model exhausted LM Studio's 8,192-token context thinking about trivial prompts; loading the full 262,144-token context fixed that. One SVG generation took 21 minutes and 22,276 reasoning tokens to produce 3,223 tokens of output. Asked simply to \"draw an svg of a circle,\" it deliberated over palettes and animation and returned something other than what was asked. The same prompt with reasoning off finished in 137 seconds. Willison's recommendation is to start at `low` or with reasoning disabled entirely.\n\nReasoning isn't useless here: with it off, a one-shot bounding-box labelling tool rendered boxes in the wrong place. On vision, the model returned bounding boxes on a 0-1000 scale that matched two pelicans in a photo closely.\n\nThe open question is speed. Willison measured roughly 15-30 tokens/second under LM Studio and calls that the main barrier to daily use, citing dense non-MoE memory bandwidth demands. Running llama.cpp with `--spec-type draft-mtp` to use the model's Multi-Token Prediction support beat the LM Studio default by around 72% in a benchmark he had GPT-5.6 run. Independent benchmarks of Qwen's self-reported gains aren't in yet.",
+    "tags": [
+      "ai",
+      "local-llms",
+      "open-weights"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "simonwillison.net",
+        "url": "https://simonwillison.net/2026/Aug/16/qwen-38-27b/"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49324985"
+      }
+    ],
+    "created_at": 1786977102333
+  }
+]
