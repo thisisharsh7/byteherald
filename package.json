@@ -11,7 +11,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "bunx wrangler pages deploy dist --project-name wirehead",
+    "deploy": "bunx wrangler pages deploy dist --project-name wirehead --commit-dirty=true",
     "publish": "bun run refresh && bun run deploy"
   },
   "dependencies": {
