@@ -1,52 +1,72 @@
 ---
 import Base from "../layouts/Base.astro";
-import postsData from "../data/posts.json";
+import { frontPage, timeLine } from "../lib/posts";
 
-const posts = postsData.map((p) => ({ ...p, when: new Date(p.created_at) }));
-
-const fmt = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "short",
-  hour: "2-digit",
-  minute: "2-digit",
-  timeZone: "UTC",
-});
+const { lead, rest } = frontPage();
+const rail = rest.slice(0, 4);
+const grid = rest.slice(4);
 ---
 
 <Base
-  title="Wirehead — agent-written tech news"
-  description="Trending technology stories from Hacker News, Lobsters and independent feeds, written up automatically."
+  title="The Wirehead — technology, as it surfaced"
+  description="Trending technology stories from Hacker News, Lobsters and independent feeds, read and written up automatically."
 >
-  <p class="disclosure">
-    <strong>How this works:</strong> a scheduled agent watches Hacker News, Lobsters
-    and a handful of independent tech feeds, reads the stories that gained traction,
-    and writes them up. Sources are linked on every post — read them if the detail
-    matters.
-  </p>
-
-  {posts.length === 0 && (
-    <p class="empty">
-      Nothing published yet. Run <code>bun run pipeline</code> to ingest and write.
-    </p>
-  )}
-
-  <ul class="feed">
-    {posts.map((post) => (
-      <li>
-        <div class="card-kicker">
-          <span>{fmt.format(post.when)} UTC</span>
-          {post.generator === "placeholder-extractive" && (
-            <span class="badge-placeholder">Placeholder</span>
-          )}
+  <div class="front">
+    {lead && (
+      <article class="lead">
+        <div class="kicker-row">
+          <span class="kicker">{lead.section}</span>
+          <span class="meta">{timeLine(lead.when)}</span>
         </div>
-        <h2 class="card-title">
-          <a href={`/posts/${post.slug}/`}>{post.title}</a>
-        </h2>
-        <p class="card-dek">{post.dek}</p>
+        <h1 class="lead-title">
+          <a href={`/posts/${lead.slug}/`}>{lead.title}</a>
+        </h1>
+        <p class="lead-dek">{lead.dek}</p>
+        {lead.excerpt && <p class="lead-excerpt">{lead.excerpt}</p>}
         <div class="tags">
-          {post.tags.map((tag) => <span class="tag">{tag}</span>)}
+          {lead.tags.map((t) => <a class="tag" href={`/topics/${t}/`}>{t}</a>)}
         </div>
-      </li>
-    ))}
-  </ul>
+      </article>
+    )}
+
+    {rail.length > 0 && (
+      <aside class="rail">
+        <h2 class="rail-head">Also today</h2>
+        <ol class="rail-list">
+          {rail.map((s) => (
+            <li>
+              <div>
+                <h3 class="rail-title">
+                  <a href={`/posts/${s.slug}/`}>{s.title}</a>
+                </h3>
+                <span class="meta">{s.section} &nbsp;·&nbsp; {timeLine(s.when)}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </aside>
+    )}
+
+    {grid.length > 0 && (
+      <>
+        <div class="divider">
+          <h2 class="section-head">More from the wire</h2>
+        </div>
+        <div class="grid">
+          {grid.map((s) => (
+            <article class="story">
+              <div class="kicker-row">
+                <span class="kicker">{s.section}</span>
+                <span class="meta">{timeLine(s.when)}</span>
+              </div>
+              <h3 class="story-title">
+                <a href={`/posts/${s.slug}/`}>{s.title}</a>
+              </h3>
+              <p class="story-dek">{s.dek}</p>
+            </article>
+          ))}
+        </div>
+      </>
+    )}
+  </div>
 </Base>

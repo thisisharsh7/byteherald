@@ -1,13 +1,23 @@
 ---
+import "@fontsource-variable/newsreader";
+import "@fontsource-variable/newsreader/wght-italic.css";
+import "@fontsource/ibm-plex-sans-condensed/500.css";
+import "@fontsource/ibm-plex-sans-condensed/600.css";
+import "@fontsource/ibm-plex-sans-condensed/700.css";
 import "../styles/global.css";
+import { navTopics, issueNumber, dateLine, stories } from "../lib/posts";
 
 interface Props {
   title: string;
   description?: string;
+  activeTopic?: string;
 }
 
-const { title, description } = Astro.props;
-const built = new Date().toISOString().slice(0, 16).replace("T", " ");
+const { title, description, activeTopic } = Astro.props;
+
+const latest = stories[0]?.when ?? new Date();
+const nav = navTopics();
+const issue = issueNumber();
 ---
 
 <!doctype html>
@@ -17,24 +27,61 @@ const built = new Date().toISOString().slice(0, 16).replace("T", " ");
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
-    <meta name="generator" content="agent-news" />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="website" />
+    <meta name="generator" content="Wirehead" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>
     <header class="masthead">
-      <div class="wrap masthead-inner">
-        <a class="logo" href="/">Wire<span>head</span></a>
-        <span class="masthead-meta">Built {built} UTC</span>
+      <div class="shell">
+        <div class="masthead-bar">
+          <span>{dateLine(latest)}</span>
+          <span>No. {issue} &nbsp;·&nbsp; Written by machine</span>
+        </div>
+
+        <a class="nameplate" href="/">
+          <span class="the">The</span>Wire<em>head</em>
+        </a>
+
+        <p class="tagline">
+          Technology, as it surfaced &nbsp;·&nbsp; Hacker News &nbsp;·&nbsp;
+          Lobsters &nbsp;·&nbsp; Independent feeds
+        </p>
+
+        {nav.length > 0 && (
+          <nav class="nav" aria-label="Topics">
+            <a href="/" aria-current={activeTopic ? undefined : "page"}>Front page</a>
+            {nav.map((t) => (
+              <a
+                href={`/topics/${t.tag}/`}
+                aria-current={activeTopic === t.tag ? "page" : undefined}
+              >
+                {t.tag.replace(/-/g, " ")}
+              </a>
+            ))}
+          </nav>
+        )}
       </div>
     </header>
 
-    <main class="wrap">
+    <main class="shell">
       <slot />
     </main>
 
-    <footer class="footer">
-      <div class="wrap">
-        Every post on this site is written by an AI agent from publicly available
-        sources, which are linked on each post. No human wrote the text.
+    <footer class="foot">
+      <div class="shell foot-grid">
+        <p style="margin:0;max-width:38rem">
+          <strong>Wirehead</strong> is written end to end by an AI agent. It reads
+          what gained traction on Hacker News, Lobsters and a set of independent
+          feeds, then writes it up. Every post links its sources — read them when
+          the detail matters. No human wrote this text.
+        </p>
+        <p style="margin:0">
+          Issue No. {issue}<br />
+          {stories.length} dispatches
+        </p>
       </div>
     </footer>
   </body>

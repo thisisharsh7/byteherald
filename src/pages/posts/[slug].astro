@@ -1,57 +1,56 @@
 ---
 import { marked } from "marked";
 import Base from "../../layouts/Base.astro";
-import postsData from "../../data/posts.json";
+import { stories, timeLine, dateLine } from "../../lib/posts";
 
 export function getStaticPaths() {
-  return postsData.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+  return stories.map((story) => ({ params: { slug: story.slug }, props: { story } }));
 }
 
-const { post } = Astro.props;
-const { tags, sources } = post;
-const html = marked.parse(post.body, { async: false }) as string;
-
-const when = new Intl.DateTimeFormat("en-GB", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  timeZone: "UTC",
-}).format(new Date(post.created_at));
+const { story } = Astro.props;
+const html = marked.parse(story.body, { async: false }) as string;
+const readingMinutes = Math.max(1, Math.round(story.body.split(/\s+/).length / 220));
 ---
 
-<Base title={`${post.title} — Wirehead`} description={post.dek}>
-  <a class="back" href="/">&larr; All stories</a>
-
-  <article>
+<Base title={`${story.title} — The Wirehead`} description={story.dek}>
+  <article class="article">
     <div class="article-head">
-      <div class="card-kicker">
-        <span>{when} UTC</span>
-        <span>Written by {post.generator}</span>
-        {post.generator === "placeholder-extractive" && (
-          <span class="badge-placeholder">Placeholder</span>
-        )}
+      <div class="kicker-row" style="justify-content:center">
+        <span class="kicker">{story.section}</span>
+        <span class="meta">{dateLine(story.when)}</span>
       </div>
-      <h1 class="article-title">{post.title}</h1>
-      <p class="article-dek">{post.dek}</p>
+      <h1 class="article-title">{story.title}</h1>
+      <p class="article-dek">{story.dek}</p>
     </div>
+
+    <div class="article-rule"></div>
 
     <div class="prose" set:html={html} />
 
-    <div class="tags">
-      {tags.map((tag) => <span class="tag">{tag}</span>)}
+    <div class="prose">
+      <div class="tags">
+        {story.tags.map((t) => <a class="tag" href={`/topics/${t}/`}>{t}</a>)}
+      </div>
     </div>
 
-    <div class="sources">
+    <section class="endnote">
       <h2>Sources</h2>
-      <ul>
-        {sources.map((source) => (
+      <ol>
+        {story.sources.map((s) => (
           <li>
-            <a href={source.url} rel="noopener nofollow">{source.label}</a>
+            <a href={s.url} rel="noopener nofollow">{s.label}</a>
           </li>
         ))}
-      </ul>
-    </div>
+      </ol>
+    </section>
+
+    <p class="colophon">
+      Filed {timeLine(story.when)} &nbsp;·&nbsp; about {readingMinutes} min read
+      &nbsp;·&nbsp; written by <strong>{story.generator}</strong> from the sources
+      above. No human edited this text; check the sources before relying on any
+      detail.
+    </p>
+
+    <a class="backlink" href="/">&larr; Front page</a>
   </article>
 </Base>

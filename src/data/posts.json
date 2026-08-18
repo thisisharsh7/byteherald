@@ -1,5 +1,58 @@
 [
   {
+    "slug": "yale-preprint-single-payer-coverage-would-cut-1t-in-annual-s-49332981",
+    "title": "Yale Preprint: Single-Payer Coverage Would Cut $1T in Annual Spending",
+    "dek": "A not-yet-peer-reviewed Yale model estimates a Medicare for All-style program would lower US health spending by $1.04 trillion a year and avert 114,174 deaths.",
+    "body": "Researchers at the Yale School of Public Health have released a preprint modeling what would happen if the US adopted a national public insurance program along the lines of the Medicare for All Act. Using 2024 spending, coverage, and mortality data, they estimate annual health expenditures would fall by $1.04 trillion — close to 20% — while covering everyone, and that 114,174 deaths a year would be averted.\n\nThe savings come from five modeled sources: lower pharmaceutical prices, Medicare-level provider payments, less administrative overhead, less fraudulent billing, and fewer avoidable emergency visits and hospitalizations. Under more conservative assumptions about drug prices and fraud, savings drop to at least $663 billion. Both figures already subtract an estimated $304 billion in new spending to cover unmet needs, reimburse currently unpaid care, and add universal dental coverage.\n\nThe mortality figure has two components. About 62,863 averted deaths come from adequate coverage for all — and nearly half of those, 29,631, are among people who already have insurance, the underinsured whose deductibles and cost-sharing keep care out of reach. Reversing coverage rollbacks and other policies enacted since 2025 accounts for a further 51,311.\n\nThe caveats are the authors' own. The study has not been peer reviewed. Direct estimates of excess mortality among underinsured adults do not exist, so that risk had to be modeled. The spending analysis excludes transition costs, administrative job losses, and how providers might react to Medicare payment rates — three of the biggest practical unknowns in any such transition.\n\nThe work extends a 2020 Lancet paper by some of the same authors, which projected $450 billion and more than 68,000 lives; the larger numbers reflect rising expenditures and a widening commercial-to-Medicare payment gap.",
+    "tags": [
+      "healthcare",
+      "policy",
+      "research",
+      "economics"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "ysph.yale.edu",
+        "url": "https://ysph.yale.edu/news-article/universal-health-coverage-could-save-one-trillion-dollars-and-114000-lives-every-year/"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49332981"
+      }
+    ],
+    "created_at": 1787053714482,
+    "source": "hackernews",
+    "score": 403,
+    "comments": 537
+  },
+  {
+    "slug": "a-shorthand-for-skipping-unedited-ai-output-49336573",
+    "title": "A shorthand for skipping unedited AI output",
+    "dek": "Rick Manelius argues for \"AI;DR\" — if you didn't bother editing the AI text you sent, he isn't going to bother reading it.",
+    "body": "Rick Manelius, writing on his newsletter on August 17, 2026, endorses a new piece of internet shorthand: AI;DR, or \"AI; didn't read.\" He credits the phrase to a tweet from the account @seclilc posted on August 15, which his post shows with 346K views and 16.6K likes. His stated policy is simple: if the sender didn't review and edit the output, he won't read it.\n\nManelius describes himself as \"about as pro-AI as you can be\" and assumes that by Q3 2026 everyone is using AI somewhere in their process — ideation, outlining, refining prose. The objection is narrower than a blanket anti-AI stance. It targets *unfiltered* output: a colleague pasting a wall of Claude text into a Slack thread, or a newsletter carrying someone's byline over prose they never edited. As he puts it, if he wanted the raw model output, he could ask Claude himself. He carves out an exception for contexts where fully generated copy is expected, naming customer support.\n\nFor anyone shipping software, the practical read is about the review step, not the generation step. Pull request descriptions, design docs, incident write-ups, and RFC comments are all places where pasted-and-unread model output is now cheap to produce and, per this argument, increasingly cheap to dismiss. The claim is a norm, not a measurement — the post offers one person's reaction plus engagement numbers on a tweet, not evidence about how widely the reflex has spread. Whether AI;DR sticks as shared vocabulary or stays a personal filter is unresolved.",
+    "tags": [
+      "ai",
+      "writing",
+      "culture"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "rickmanelius.com",
+        "url": "https://www.rickmanelius.com/p/aidr-ai-didnt-read"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49336573"
+      }
+    ],
+    "created_at": 1787053698048,
+    "source": "hackernews",
+    "score": 918,
+    "comments": 556
+  },
+  {
     "slug": "three-instructions-to-turn-a-day-count-into-a-weekday-ln3dao",
     "title": "Three instructions to turn a day count into a weekday",
     "dek": "A new set of bit-manipulation tricks computes day-of-week faster than what GCC and Clang emit for the current state-of-the-art approach.",
@@ -21,7 +74,10 @@
         "url": "https://lobste.rs/s/ln3dao/faster_way_calculate_day_week"
       }
     ],
-    "created_at": 1787052830957
+    "created_at": 1787052830957,
+    "source": "lobsters",
+    "score": 75,
+    "comments": 8
   },
   {
     "slug": "leaving-github-means-leaving-the-community-not-the-git-izrwdc",
@@ -45,7 +101,10 @@
         "url": "https://lobste.rs/s/izrwdc/github_has_alternatives_no_replacement"
       }
     ],
-    "created_at": 1787052813433
+    "created_at": 1787052813433,
+    "source": "lobsters",
+    "score": 50,
+    "comments": 40
   },
   {
     "slug": "github-outages-reopen-the-self-hosting-question-on-lobsters-0zdh32",
@@ -69,7 +128,10 @@
         "url": "https://lobste.rs/s/0zdh32/does_it_make_sense_switch_github"
       }
     ],
-    "created_at": 1787052797214
+    "created_at": 1787052797214,
+    "source": "lobsters",
+    "score": 71,
+    "comments": 76
   },
   {
     "slug": "how-a-39-day-crack-killed-id-software-s-direct-sales-experim-49338328",
@@ -93,26 +155,10 @@
         "url": "https://news.ycombinator.com/item?id=49338328"
       }
     ],
-    "created_at": 1787052779669
-  },
-  {
-    "slug": "ai-dr-a-two-word-policy-for-unedited-ai-output-49336573",
-    "title": "\"AI;DR\": A Two-Word Policy for Unedited AI Output",
-    "dek": "A blogger has adopted a viral shorthand — AI; didn't read — as his stated policy for skipping AI text nobody bothered to edit.",
-    "body": "Rick Manelius, writing on his newsletter on Aug 17, 2026, endorsed a piece of shorthand that had been circulating for two days: **AI;DR**, or \"AI; didn't read.\" He credits the phrasing to a tweet by the account seclilc posted Aug 15. His post landed on Hacker News with 918 points and 556 comments, which suggests the frustration is widely shared.\n\nThe policy itself is one line: \"If you're not bothered enough to review and edit it... then I'm not going to bother reading it.\" Manelius describes himself as strongly pro-AI and assumes that by Q3 2026 nearly everyone uses AI somewhere in their process — sourcing ideas, outlining, refining prose. His objection is narrower than a blanket anti-AI stance. It targets output pasted through unedited, and he draws a line between contexts: fully generated copy is fine for customer support, but a wall of model output dropped into a Slack thread reads to him as a signal about how much the sender cared.\n\nFor anyone shipping software, the practical read is about review as a social obligation rather than a quality gate. Unedited generated text in a PR description, a design doc, or an incident summary carries a cost the author doesn't pay and the reader does — and colleagues are starting to name that cost out loud.\n\nWhat the post does not offer is evidence beyond the author's own reaction and the engagement numbers. There is no data on how common the practice is, no survey, and no claim that the norm has settled. It is one person stating a policy that resonated.",
-    "tags": [],
-    "generator": "claude-opus-5 (claude-code)",
-    "sources": [
-      {
-        "label": "rickmanelius.com",
-        "url": "https://www.rickmanelius.com/p/aidr-ai-didnt-read"
-      },
-      {
-        "label": "hackernews discussion",
-        "url": "https://news.ycombinator.com/item?id=49336573"
-      }
-    ],
-    "created_at": 1787052761960
+    "created_at": 1787052779669,
+    "source": "hackernews",
+    "score": 371,
+    "comments": 158
   },
   {
     "slug": "bluesky-uses-an-ios-privacy-api-to-stamp-its-logo-on-screens-49338459",
@@ -136,7 +182,10 @@
         "url": "https://news.ycombinator.com/item?id=49338459"
       }
     ],
-    "created_at": 1787052744327
+    "created_at": 1787052744327,
+    "source": "hackernews",
+    "score": 555,
+    "comments": 362
   },
   {
     "slug": "gimp-is-replacing-xcf-with-a-zipped-xml-project-format-49326156",
@@ -160,7 +209,10 @@
         "url": "https://news.ycombinator.com/item?id=49326156"
       }
     ],
-    "created_at": 1786977629899
+    "created_at": 1786977629899,
+    "source": "hackernews",
+    "score": 261,
+    "comments": 244
   },
   {
     "slug": "the-small-model-trade-reasoning-in-facts-out-49322695",
@@ -184,7 +236,10 @@
         "url": "https://news.ycombinator.com/item?id=49322695"
       }
     ],
-    "created_at": 1786977611415
+    "created_at": 1786977611415,
+    "source": "hackernews",
+    "score": 333,
+    "comments": 187
   },
   {
     "slug": "c3-s-creator-says-calling-it-a-c-alternative-was-a-marketing-wpyhdh",
@@ -207,7 +262,10 @@
         "url": "https://lobste.rs/s/wpyhdh/i_thought_i_was_building_c_replacement_i"
       }
     ],
-    "created_at": 1786977591575
+    "created_at": 1786977591575,
+    "source": "lobsters",
+    "score": 116,
+    "comments": 106
   },
   {
     "slug": "a-satirical-landing-page-that-roasts-ai-generated-web-design-ii5tun",
@@ -231,7 +289,10 @@
         "url": "https://lobste.rs/s/ii5tun/every_fucking_website"
       }
     ],
-    "created_at": 1786977572237
+    "created_at": 1786977572237,
+    "source": "lobsters",
+    "score": 105,
+    "comments": 62
   },
   {
     "slug": "the-risc-v-argument-looks-different-from-trinidad-49321717",
@@ -254,7 +315,10 @@
         "url": "https://news.ycombinator.com/item?id=49321717"
       }
     ],
-    "created_at": 1786977208177
+    "created_at": 1786977208177,
+    "source": "hackernews",
+    "score": 610,
+    "comments": 325
   },
   {
     "slug": "stripe-reportedly-buys-ai-gateway-openrouter-for-over-7b-49323381",
@@ -278,7 +342,10 @@
         "url": "https://news.ycombinator.com/item?id=49323381"
       }
     ],
-    "created_at": 1786977183425
+    "created_at": 1786977183425,
+    "source": "hackernews",
+    "score": 463,
+    "comments": 291
   },
   {
     "slug": "gruber-claude-s-text-watermark-trades-word-choice-for-compli-49324087",
@@ -302,7 +369,10 @@
         "url": "https://news.ycombinator.com/item?id=49324087"
       }
     ],
-    "created_at": 1786977164196
+    "created_at": 1786977164196,
+    "source": "hackernews",
+    "score": 794,
+    "comments": 695
   },
   {
     "slug": "github-degraded-20-error-rates-across-web-api-and-actions-49330684",
@@ -326,7 +396,10 @@
         "url": "https://news.ycombinator.com/item?id=49330684"
       }
     ],
-    "created_at": 1786977120917
+    "created_at": 1786977120917,
+    "source": "hackernews",
+    "score": 698,
+    "comments": 2
   },
   {
     "slug": "qwen-3-8-27b-ships-with-its-reasoning-dial-cranked-to-max-49324985",
@@ -349,6 +422,9 @@
         "url": "https://news.ycombinator.com/item?id=49324985"
       }
     ],
-    "created_at": 1786977102333
+    "created_at": 1786977102333,
+    "source": "hackernews",
+    "score": 776,
+    "comments": 370
   }
 ]

@@ -1,0 +1,42 @@
+---
+import Base from "../../layouts/Base.astro";
+import { topics, byTopic, timeLine } from "../../lib/posts";
+
+export function getStaticPaths() {
+  return topics().map(({ tag }) => ({ params: { tag }, props: { tag } }));
+}
+
+const { tag } = Astro.props;
+const list = byTopic(tag);
+const label = tag.replace(/-/g, " ");
+---
+
+<Base
+  title={`${label} — The Wirehead`}
+  description={`Every Wirehead dispatch filed under ${label}.`}
+  activeTopic={tag}
+>
+  <div class="front">
+    <div class="divider" style="border-top:0;margin-top:0;padding-top:1.5rem">
+      <h1 class="section-head">
+        {label} &nbsp;·&nbsp; {list.length}
+        {list.length === 1 ? "dispatch" : "dispatches"}
+      </h1>
+    </div>
+    <div class="grid">
+      {list.map((s) => (
+        <article class="story">
+          <div class="kicker-row">
+            <span class="kicker">{s.section}</span>
+            <span class="meta">{timeLine(s.when)}</span>
+          </div>
+          <h2 class="story-title">
+            <a href={`/posts/${s.slug}/`}>{s.title}</a>
+          </h2>
+          <p class="story-dek">{s.dek}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+  <a class="backlink" href="/">&larr; Front page</a>
+</Base>

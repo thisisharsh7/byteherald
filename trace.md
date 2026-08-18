@@ -218,3 +218,67 @@ Verified live from the CDN (not just trusting the success message):
 Steady state from here:
 - `bun run publish` = refresh + deploy (the one command)
 - Site stays live with the Mac closed; only new posts stop.
+
+### 2026-08-18 — Phase 5 (proper design: broadsheet)
+User: the site "looks simple", doesn't want it to look like a simple AI project;
+asked me to research and pick a direction myself rather than choose from options.
+(Saved that preference to memory — do not hand him option menus for design.)
+
+**Research findings.** The tell for AI-built sites is not the colours, it's
+*uniformity*: every item rendered at identical size in one flat list, evenly
+weighted palette, no editorial judgment expressed visually. That was exactly our
+old front page. Also flagged across sources: avoid Inter/Roboto/system fonts and
+timid evenly-distributed palettes; commit to a dominant colour with sharp accents;
+use a distinctive display face plus a separate text face; ship WOFF2.
+
+**Direction chosen: broadsheet newspaper.** Rejected alternatives and why:
+- *Wire terminal* (dark/mono/amber) — clever and on-concept, but dark+monospace is
+  itself the dev-toy cliché; would read as a hobby project, the opposite of the goal.
+- *Swiss editorial* (huge whitespace, oversized grotesk) — beautiful but
+  whitespace-heavy, and a news digest needs density to show many stories.
+Broadsheet wins because the product *is* a publication, so the form matches the
+function, and it's the direction that most reads "legitimate".
+
+Implementation:
+- Type: `Newsreader Variable` (200-800 wght, screen-tuned news serif) for display
+  and body; `IBM Plex Sans Condensed` for all furniture (kickers, nav, meta,
+  endnotes). Both self-hosted via `@fontsource*` — 15 WOFF2 files, zero external
+  requests. Palette: warm newsprint (#f7f4ec) / ink / one newspaper red (#a32b1c).
+- New: `src/lib/posts.ts` (sections from tags, topics, issue number, excerpts),
+  `src/pages/topics/[tag].astro` (44 real topic pages so the nav isn't decorative),
+  `public/favicon.svg`. Rewrote global.css (538 lines), Base.astro, index.astro,
+  posts/[slug].astro.
+- Front page: lead story (fluid up to 3.75rem) + two-column excerpt, numbered
+  "Also today" rail behind a vertical rule, then a 4-col story grid. Article page:
+  centred head, drop cap, small-caps opening line, sources as a numbered endnote,
+  colophon disclosing the generator. 66 pages, 860K, no horizontal overflow at
+  390px, both themes.
+
+**FINDING — fixed (editorial, not visual):** the lead story was just the newest
+post, so a day-of-week bit-twiddling article led over a $7B acquisition. A
+newspaper leads on its biggest story. Added engagement (`source`, `score`,
+`comments`) to `scripts/export.ts` by joining `covered` → `raw_items`, and
+`frontPage()` in posts.ts now picks the lead by per-source-normalised engagement
+within the recent window.
+
+**ERROR — fixed, subtle:** the first version of that weight function clamped with
+`Math.min(1, ...)`. Both HN and Lobsters leaders exceeded their ceilings, so every
+big story tied at 1.0 and the lead silently fell back to recency — reintroducing
+the exact bug the function was written to fix. **Rule: do not clamp a score you
+intend to rank by.**
+
+**FINDING — fixed:** one published post had `tags: []`, rendering as a sectionless
+orphan ("DISPATCH" fallback) with no topic links. `validateDraft()` accepted it.
+Now throws on empty tags, so the story stays uncovered and is retried next run.
+Freed and regenerated that post.
+
+**Fixed:** `.grid` used `auto-fill`, so CSS could not know the column count and
+`:nth-child` could not strip the trailing right-hand rules — they read as
+unfinished. Switched to explicit 4/3/2/1 columns per breakpoint.
+
+**Fixed:** excerpt sentence-splitter cut before closing quotes, leaving a stray
+`"` opening the second column of the lead excerpt.
+
+Still not done: no pagination (front page will get long past ~25 posts), no RSS
+feed of our own, no theme toggle (follows OS only), Ars Technica extraction still
+broken.

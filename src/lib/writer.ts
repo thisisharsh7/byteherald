@@ -242,6 +242,11 @@ function validateDraft(value: unknown): Draft {
   const body = str("body");
   if (body.split(/\s+/).length < 40) throw new Error("draft.body suspiciously short");
 
+  // Tags drive the section kicker and the topic pages, so an untagged post
+  // renders as a sectionless orphan. Fail here instead: the story stays
+  // uncovered and gets retried on the next run.
+  if (tags.length === 0) throw new Error("draft.tags empty");
+
   return {
     title: str("title"),
     dek: str("dek"),
