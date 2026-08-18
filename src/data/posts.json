@@ -1,5 +1,144 @@
 [
   {
+    "slug": "three-instructions-to-turn-a-day-count-into-a-weekday-ln3dao",
+    "title": "Three instructions to turn a day count into a weekday",
+    "dek": "A new set of bit-manipulation tricks computes day-of-week faster than what GCC and Clang emit for the current state-of-the-art approach.",
+    "body": "Benjamin Joffe has published a collection of day-of-week algorithms that he benchmarks at roughly 0.3–0.5× the time of Cassio Neri's 2024 method, itself the current reference implementation and already faster than the naive double-modulo or Rust's `rem_euclid`. Several of the new functions have a latency of one multiplication plus two cycles.\n\nThe core trick exploits that 7 is a Mersenne number (2³ − 1), which permits the identity `N % 7 = floor(N * 8 / 7) % 8`. Multiplying by an approximation of 8/7 and taking the *low* bits, with a right shift of exactly three less than the register width, leaves the modulo for free in the remaining three bits. An added constant rotates the output to align with the Unix epoch falling on a Thursday. Because that constant is only a rotation, producing ISO weekdays (1–7) instead of Unix (0–6) costs nothing — same instructions, different constant.\n\nThe simplest version is three operations but valid only over about ±242,000 years; full 32-bit range needs 64-bit widening or one of three other variants. The article notes the technique is already in use: Rust's Jiff date library, which spans ±10,000 years, saw a 40% improvement in `nth_weekday_of_month`.\n\nRelevance is narrow — date libraries, database engines, compilers. Joffe himself recommends plain `(rd + 4) % 7` where maintainability matters. Benchmarks come from the author on AMD Ryzen 9 and Apple M4 Pro; no independent verification is cited.",
+    "tags": [
+      "performance",
+      "c++",
+      "assembly",
+      "math"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "benjoffe.com",
+        "url": "https://www.benjoffe.com/fast-day-of-week"
+      },
+      {
+        "label": "lobsters discussion",
+        "url": "https://lobste.rs/s/ln3dao/faster_way_calculate_day_week"
+      }
+    ],
+    "created_at": 1787052830957
+  },
+  {
+    "slug": "leaving-github-means-leaving-the-community-not-the-git-izrwdc",
+    "title": "Leaving GitHub means leaving the community, not the Git",
+    "dek": "A blog post argues the hard part of replacing GitHub is its social layer — shared identities, conventions and discovery — not repository hosting.",
+    "body": "Codeberg's recent decision to prohibit projects consisting mostly of generative-AI-written code set off wide discussion, and a post by Lalit M uses the reaction as a starting point for a broader argument: the disappointment revealed that people wanted Codeberg to be a universal GitHub replacement, which it never claimed to be.\n\nThe author's core claim is that plenty of places will host a Git repository, but almost none host an open-source community. GitHub supplies a shared pool of identities, familiar issue and PR conventions, and — historically — discovery. Self-hosting a forge works for personal projects, but asking a stranger to create an account and learn your conventions to file a small bug is a real barrier. Federation via Forgejo is still explicitly experimental, with moderation and access control undeveloped. Radicle's web interface is read-only, so contributing means installing its CLI or desktop app. SourceHut's email workflow is unfamiliar to most GitHub users. Tangled, the author's favourite, is in alpha.\n\nThe practical hook for developers is reliability. GitHub itself described two recent major incidents as \"not acceptable,\" and Mitchell Hashimoto announced in late April that Ghostty is leaving GitHub after outages blocked PR review — while noting the problem is the surrounding infrastructure, not Git. Hashimoto said Ghostty was talking to multiple commercial and FOSS providers and planned an incremental migration.\n\nWhat's unresolved is whether a deliberately boring, for-profit forge could work as a business. The author has no answer to the cold-start problem: shared identity and discovery only become valuable at scale, and Bitbucket is the obvious counterexample of a conventional commercial forge that never grew a comparable community.",
+    "tags": [
+      "vcs",
+      "open-source",
+      "github",
+      "developer-tools"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "lalitm.com",
+        "url": "https://lalitm.com/post/github-alternatives/"
+      },
+      {
+        "label": "lobsters discussion",
+        "url": "https://lobste.rs/s/izrwdc/github_has_alternatives_no_replacement"
+      }
+    ],
+    "created_at": 1787052813433
+  },
+  {
+    "slug": "github-outages-reopen-the-self-hosting-question-on-lobsters-0zdh32",
+    "title": "GitHub outages reopen the self-hosting question on Lobsters",
+    "dek": "A Lobsters thread on GitHub's recent downtime drew 76 comments, most arguing the answer depends entirely on what you actually use the forge for.",
+    "body": "A Lobsters ask post on 2026-08-17 asked whether GitHub's repeated downtime justifies moving to an alternative, and drew 71 points and 76 comments. The trigger was concrete: commenters reported GitHub down for roughly 20-30 minutes that day with sporadic issues throughout, and one noted githubusercontent returning 429s on every request, which broke installing nvm because its install script is hosted there.\n\nThe thread's dominant answer is that the decision splits by use case rather than by principle. Several commenters said corporate users are locked in by Actions, user management, and free CI runners; one said their organization can't replace Actions because they know of no managed platform offering Linux, Linux-ARM, Windows, Windows-ARM, macOS-Intel, and macOS-ARM runners. Another commenter said their workplace is seriously considering a move, helped by an existing policy against third-party actions.\n\nFor personal and small projects, the suggested path was mostly not another forge but static hosting: bare git repos served over git's dumb HTTP protocol, plus stagit or generated static HTML for a web view, tarballs with checksums, and atom feeds. One commenter described also serving Go modules from static HTML with an nginx rule for `?go-get=1` requests. Others floated reviving shared \"tilde\" servers running git hosting, mailing lists, and hook-based CI for a project's members.\n\nWhat the thread does not settle: whether any of this is happening at scale. The original question asked when the majority would switch, and nobody offered evidence either way. Codeberg came up as an option, with a claim it restricts itself to open source and one unanswered question about whether it accepts PolyForm-style non-commercial licenses.",
+    "tags": [
+      "git",
+      "github",
+      "self-hosting",
+      "devops"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "lobste.rs",
+        "url": "https://lobste.rs/s/0zdh32/does_it_make_sense_switch_github"
+      },
+      {
+        "label": "lobsters discussion",
+        "url": "https://lobste.rs/s/0zdh32/does_it_make_sense_switch_github"
+      }
+    ],
+    "created_at": 1787052797214
+  },
+  {
+    "slug": "how-a-39-day-crack-killed-id-software-s-direct-sales-experim-49338328",
+    "title": "How a 39-Day Crack Killed id Software's Direct-Sales Experiment",
+    "dek": "Fabien Sanglard's teardown of the 1996 Quake shareware CD-ROM shows the unlock code was generated locally the whole time.",
+    "body": "Fabien Sanglard has published a teardown of the 1996 Quake shareware CD-ROM, the disc id Software sold for $9.95 at CompUSA and Computer City with the rest of its catalogue — several DOOM versions, Hexen, Heretic — sitting encrypted in the leftover space. Buyers were meant to call 1-800-ID-GAMES, read out a challenge number, pay, and get an unlock code back.\n\nThe flaw is the kind that still ships today. The unlock tool, licensed from TestDrive Corp, generated a serial from the challenge and then compared it against what the user typed. The serial carried no secret; it was only proof of payment. The hacker group GNOMON worked this out and released QCRACK.EXE 39 days after the CD hit stores, able to derive a valid serial from any challenge. Sanglard walks through the derivation, which was reverse-engineered in 2016 by rmolina: a game ID indexes an encrypted SKU database, a codename pulls a 512-byte record, and offset/depth values walk a table to produce the final number.\n\nSupporting details make it worse. The encrypted `SKU.17` file has a plaintext twin, `SKU.TXT`, elsewhere on the disc. Temporary files, editor backups, and an unused `ENCRYPT.EXE` shipped too. A typo in the SKU table capitalised \"Final\", meaning Final Doom could not be unlocked by paying — crackers got a better experience than customers.\n\nSanglard quotes David Kushner's *Masters of Doom* on the aftermath: fulfilment spun out of control and id was left with roughly 150,000 CDs in a warehouse. The article does not claim the crack alone caused that.",
+    "tags": [
+      "security",
+      "reverse-engineering",
+      "gaming",
+      "drm"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "fabiensanglard.net",
+        "url": "https://fabiensanglard.net/quake_shareware_cd/index.html"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49338328"
+      }
+    ],
+    "created_at": 1787052779669
+  },
+  {
+    "slug": "ai-dr-a-two-word-policy-for-unedited-ai-output-49336573",
+    "title": "\"AI;DR\": A Two-Word Policy for Unedited AI Output",
+    "dek": "A blogger has adopted a viral shorthand — AI; didn't read — as his stated policy for skipping AI text nobody bothered to edit.",
+    "body": "Rick Manelius, writing on his newsletter on Aug 17, 2026, endorsed a piece of shorthand that had been circulating for two days: **AI;DR**, or \"AI; didn't read.\" He credits the phrasing to a tweet by the account seclilc posted Aug 15. His post landed on Hacker News with 918 points and 556 comments, which suggests the frustration is widely shared.\n\nThe policy itself is one line: \"If you're not bothered enough to review and edit it... then I'm not going to bother reading it.\" Manelius describes himself as strongly pro-AI and assumes that by Q3 2026 nearly everyone uses AI somewhere in their process — sourcing ideas, outlining, refining prose. His objection is narrower than a blanket anti-AI stance. It targets output pasted through unedited, and he draws a line between contexts: fully generated copy is fine for customer support, but a wall of model output dropped into a Slack thread reads to him as a signal about how much the sender cared.\n\nFor anyone shipping software, the practical read is about review as a social obligation rather than a quality gate. Unedited generated text in a PR description, a design doc, or an incident summary carries a cost the author doesn't pay and the reader does — and colleagues are starting to name that cost out loud.\n\nWhat the post does not offer is evidence beyond the author's own reaction and the engagement numbers. There is no data on how common the practice is, no survey, and no claim that the norm has settled. It is one person stating a policy that resonated.",
+    "tags": [],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "rickmanelius.com",
+        "url": "https://www.rickmanelius.com/p/aidr-ai-didnt-read"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49336573"
+      }
+    ],
+    "created_at": 1787052761960
+  },
+  {
+    "slug": "bluesky-uses-an-ios-privacy-api-to-stamp-its-logo-on-screens-49338459",
+    "title": "Bluesky uses an iOS privacy API to stamp its logo on screenshots",
+    "dek": "A blog post traces the app's screenshot watermark to a UITextField in secure-entry mode, hiding a Follow button until iOS blanks the layer.",
+    "body": "A developer noticed that screenshots of Bluesky posts show the Bluesky logo where the app itself displays a \"Follow\" button, and tracked the mechanism down in the app's publicly available source.\n\nThe relevant code sits in a file named `GrowthHack.tsx`, added in January 2026 by the developer mozzius, which depends on a package by the same author called `expo-privacy-sensitive`. According to the post, the package creates a `UITextField` with `isSecureTextEntry` set to `true` and renders the real content — the Follow button — into that field's `.layer`. When iOS takes a screenshot, it blanks the layer to protect secure text input, and the logo underneath becomes visible. On non-iOS platforms, the package renders content normally with no masking.\n\nThe author also found the trick fails if you screenshot mid-app-switch, when the Follow button does appear. Their explanation is a guess, stated as such: iOS captures its own snapshot at the start of the gesture without triggering the blanking, so there is no live text field left to react. They note twice they are not an iOS developer.\n\nFor anyone shipping mobile apps, the practical takeaway is that this is a documented-enough pattern to be durable. The post says Telegram used the same approach for secret chats and so did Signal, which is the author's reason for doubting Apple will close it. Whether repurposing a privacy API for brand watermarking is acceptable is contested — the post says most commenters on the pull request adding the behavior disliked it, and the thread was locked.",
+    "tags": [
+      "ios",
+      "mobile",
+      "privacy",
+      "bluesky"
+    ],
+    "generator": "claude-opus-5 (claude-code)",
+    "sources": [
+      {
+        "label": "timmarinin.net",
+        "url": "https://timmarinin.net/2026/bluesky-screenshots/"
+      },
+      {
+        "label": "hackernews discussion",
+        "url": "https://news.ycombinator.com/item?id=49338459"
+      }
+    ],
+    "created_at": 1787052744327
+  },
+  {
     "slug": "gimp-is-replacing-xcf-with-a-zipped-xml-project-format-49326156",
     "title": "GIMP is replacing XCF with a zipped-XML project format",
     "dek": "An August development update details work toward GIMP 3.3.2, including a new project file format, PSD Descriptor import, and native file dialogs.",
