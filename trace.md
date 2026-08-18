@@ -193,3 +193,28 @@ Commands:
 
 **One-time setup the user must do (browser OAuth, cannot be automated):**
 `bunx wrangler login`
+
+### 2026-08-18 — LIVE
+Deployed to Cloudflare Pages. **https://wirehead.pages.dev**
+- Cloudflare account: kuharsh5@gmail.com, account id 4d67bc68997b42d8147e44946afad88e
+- GitHub: https://github.com/thisisharsh7/wirehead (private)
+
+**GOTCHA — fixed:** `wrangler pages deploy` failed with `The Pages project
+"wirehead" does not exist`. Newer wrangler (4.123) does NOT auto-create the
+project when running non-interactively; the docs' "it'll prompt you" path only
+applies in a TTY. Fix: `wrangler pages project create wirehead
+--production-branch main` first, then deploy. **Only needed once** — subsequent
+`bun run deploy` calls work directly.
+
+Verified live from the CDN (not just trusting the success message):
+- `/` -> 200, HTTP/2, 552ms, all 9 posts present
+- article deep link -> 200
+- CSS is *inlined* by Astro (small enough), so pages are single self-contained
+  HTML files with zero extra asset requests. Palette confirmed in the response.
+- The per-deployment preview URL (195a963b.wirehead.pages.dev) returned 000
+  immediately after deploy — DNS for the hashed subdomain lags a minute. The
+  production URL was fine instantly. Not a problem, just don't panic-check it.
+
+Steady state from here:
+- `bun run publish` = refresh + deploy (the one command)
+- Site stays live with the Mac closed; only new posts stop.
