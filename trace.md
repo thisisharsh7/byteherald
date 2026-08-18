@@ -196,7 +196,8 @@ Commands:
 
 ### 2026-08-18 — LIVE
 Deployed to Cloudflare Pages. **https://wirehead.pages.dev**
-- Cloudflare account: kuharsh5@gmail.com, account id 4d67bc68997b42d8147e44946afad88e
+- Cloudflare account: the owner's personal account (identifiers deliberately not
+  recorded here — this file is public)
 - GitHub: https://github.com/thisisharsh7/wirehead (private)
 
 **GOTCHA — fixed:** `wrangler pages deploy` failed with `The Pages project
