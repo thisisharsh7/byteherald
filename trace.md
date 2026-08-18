@@ -282,3 +282,29 @@ unfinished. Switched to explicit 4/3/2/1 columns per breakpoint.
 Still not done: no pagination (front page will get long past ~25 posts), no RSS
 feed of our own, no theme toggle (follows OS only), Ars Technica extraction still
 broken.
+
+### 2026-08-18 — Phase 5b (rule clutter + dark palette)
+User feedback on the broadsheet: "the colors many horizontal line cluttered".
+Both parts were correct.
+
+**Rule clutter.** The masthead stacked FOUR horizontal lines before the reader
+reached a single story: top-bar bottom border, tagline top border, nav top border,
+and a 3px double rule closing the masthead. The section divider added a fifth by
+sitting directly above the section heading's own border. Newspapers use rules
+sparingly as structure; this was using them as decoration.
+
+Fixed — separation is now done with space, and one rule per real boundary:
+- masthead: single 1px rule (was 3px double); removed the bar/tagline/nav borders
+- `.divider`: no rule of its own — the section heading below carries the line
+- `.article-rule`: was `1px solid` + `3px double` stacked; now a single short
+  8rem centred hairline under the article head
+- endnote, footer, mobile rail: `3px double` -> `1px solid`
+- `.rail-head` / `.section-head`: 2px -> 1px
+Zero `border: double` declarations remain in the stylesheet.
+
+**Dark palette.** Was near-black `#100f0c` under bright cream `#ece6d8` — harsh,
+and the strong rule colour `#6a6353` was bright enough that the double rules
+shouted. Warmed and softened: paper `#1a1814`, ink `#e8e2d4`, secondary ink
+`#b3ab98` (slightly brighter for legibility), rules `#322e26` / `#4d4739`.
+
+Verified both themes at 1440px and mobile after the change.
