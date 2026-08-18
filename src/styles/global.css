@@ -28,7 +28,7 @@
   --fs-lead:      clamp(2rem, 5vw, 3.6rem);
   --fs-item:      clamp(1.05rem, 1.4vw, 1.22rem);
   --fs-body:      1rem;
-  --fs-kicker:    0.68rem;
+  --fs-kicker:    0.72rem;   /* ~11.5px; below ~11px uppercase meta gets hard to read */
 
   /* Wide enough that the column doesn't read as a ribbon on a big screen.
      ~62 mono characters. */
@@ -541,7 +541,12 @@ a { color: inherit; text-decoration: none; }
 
 .empty { color: var(--ink-2); font-size: 0.95rem; }
 
-/* ---------- responsive ---------- */
+/* ---------- responsive ----------
+   Absence of horizontal overflow is not the same thing as reading well. Mono is
+   wide per character, so a desktop type scale on a 390px screen leaves very few
+   characters per line and wraps short phrases mid-way. These breakpoints reduce
+   the scale, stop the masthead furniture from wrapping mid-phrase, and give the
+   nav real tap targets. */
 
 @media (max-width: 62rem) {
   .lead { grid-column: 1 / -1; }
@@ -555,10 +560,99 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-@media (max-width: 40rem) {
-  .foot-links { text-align: left; }
-  .nav { gap: 0.7rem 1rem; }
+/* --- tablet and below --- */
+@media (max-width: 48rem) {
+  :root {
+    --fs-lead: clamp(1.75rem, 7vw, 2.6rem);
+    --fs-nameplate: clamp(1.9rem, 9vw, 3rem);
+  }
+
+  .nav { justify-content: flex-start; gap: 0.2rem 1.1rem; }
+
+  /* Measured 28px before this; the WCAG target-size guidance is 44px. The height
+     has to come from the box — bumping font-size instead would wreck the scale. */
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* The 44px box makes the desktop block-highlight a heavy yellow rectangle.
+     Paint a highlighter stripe behind the text instead of filling the box. */
+  .nav a[aria-current="page"] {
+    background: none;
+    box-shadow: inset 0 -0.75em 0 var(--mark);
+  }
 }
+
+/* --- phones --- */
+@media (max-width: 34rem) {
+  :root {
+    --fs-body: 0.9rem;
+    /* 0.62rem measured 9.9px, below a comfortable floor for secondary text. */
+    --fs-kicker: 0.7rem;
+    /* Trimmed to buy back characters per line — see the note below. */
+    --gutter: 0.95rem;
+    --fs-lead: clamp(1.6rem, 8.4vw, 2.2rem);
+  }
+
+  body { line-height: 1.68; }
+
+  /* Was wrapping "TUESDAY, 18 AUGUST / 2026" and "...11:48 / UTC" mid-phrase,
+     which reads as breakage. Stack the two as deliberate lines instead. */
+  .masthead-bar {
+    flex-direction: column;
+    gap: 0.15rem;
+    letter-spacing: 0.09em;
+    padding: 0.75rem 0 0.55rem;
+  }
+
+  .masthead-bar span { white-space: nowrap; }
+
+  .nameplate { padding-top: 1.1rem; }
+  .nameplate .the { letter-spacing: 0.3em; margin-bottom: 0.5rem; }
+
+  .tagline { letter-spacing: 0.1em; line-height: 1.7; }
+
+  .nav { gap: 0.35rem 0.9rem; padding: 0.9rem 0 0.8rem; }
+
+  .lead-dek { font-size: 1rem; }
+  .lead-excerpt { font-size: 0.88rem; }
+
+  .article-title { font-size: clamp(1.7rem, 8vw, 2.3rem); }
+  .article-dek { font-size: 1rem; }
+  .prose { font-size: 0.93rem; line-height: 1.78; }
+  .prose h2 { font-size: 1.25rem; margin-top: 2.1rem; }
+
+  .index-title { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+  .index-item-title { font-size: 1.2rem; }
+  .index-item-dek { font-size: 0.88rem; }
+
+  .story-title { font-size: 1.1rem; }
+  .story-dek { font-size: 0.86rem; }
+  .rail-title { font-size: 0.95rem; }
+
+  .colophon { font-size: 0.76rem; }
+  .foot { font-size: 0.76rem; }
+  .foot-links { text-align: left; }
+
+  /* Links inside prose and endnotes get a little more room to be tapped. */
+  .endnote li { margin-bottom: 0.55rem; }
+}
+
+/* --- very narrow (small Android, older iPhone SE) --- */
+@media (max-width: 22.5rem) {
+  :root { --fs-body: 0.86rem; --fs-kicker: 0.7rem; --gutter: 0.85rem; }
+  .masthead-bar { letter-spacing: 0.05em; }
+  .nav { gap: 0.2rem 0.7rem; }
+}
+
+/* Characters per line, measured: ~44 at 390px, ~34 at 320px.
+   The comfortable range for prose is 45-75, and monospace cannot reach it on a
+   phone — mono glyphs are ~0.6em wide, so hitting 55 characters at 390px would
+   need roughly 10px type. Sacrificing legibility for line length is the wrong
+   trade, so the type size wins and the line stays short. This is a property of
+   setting a mono face on a narrow screen, not a bug to keep chasing. */
 
 @media print {
   .nav, .foot, .backlink { display: none; }

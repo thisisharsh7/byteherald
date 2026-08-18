@@ -540,3 +540,35 @@ wrong the moment the writer backend changes (the `api` backend is already
 model-swappable). Also `newz` reads spammy, which cuts against the E-E-A-T work.
 Recommendation: keep The Byte Herald; disclose Claude's involvement in the
 copy/colophon (already done) rather than in the trademark-bearing brand name.
+
+### 2026-08-18 — Phase 10 (real mobile pass, README rewrite)
+
+**The overflow audit was the wrong test.** It proved nothing spilled horizontally
+and said nothing about whether mobile *read* well. Measuring what actually matters
+exposed four problems it had passed clean:
+- masthead furniture wrapping mid-phrase ("TUESDAY, 18 AUGUST / 2026")
+- nav tap targets 28px (WCAG guidance is 44px)
+- smallest text 9.3–9.9px, and the base kicker at 10.9px affected every width
+- 31–43 characters per line
+
+Fixed: tablet/phone/narrow breakpoints with a reduced type scale; masthead bar
+stacks deliberately instead of wrapping; `.nav a` uses `inline-flex` + `min-height:
+44px` (height from the box, not the font size); kicker floored at ~11.5px base and
+~11.2px on phones; gutter trimmed to buy characters back. The mobile active-nav
+highlight became an inset stripe because the new 44px box turned the desktop
+block-highlight into a heavy yellow rectangle.
+
+**Characters per line stays at ~31–44 on phones and that is accepted, not
+outstanding.** Mono glyphs are ~0.6em wide, so reaching the comfortable 45–75 range
+at 390px would need ~10px type. Legibility beats line length; documented in the
+stylesheet so it isn't re-chased.
+
+Verified: **72 checks (6 page types × 12 widths, 320→2560px)** for overflow, tap
+size and minimum font — all clear. Also looked at it, which is what caught the
+yellow-block regression that measurement passed.
+
+**README rewritten.** The first version opened with command tables and a directory
+tree — reference documentation for someone who already knew what the project was.
+Now it leads with what it is, why it exists, and who it's for, with three
+screenshots (desktop, article, mobile), and keeps the honest-limitations section.
+Credited to Harsh Kumar.
