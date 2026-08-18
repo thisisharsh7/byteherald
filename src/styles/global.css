@@ -4,17 +4,22 @@
    ============================================================ */
 
 :root {
-  /* Newsprint. Warm, slightly yellowed paper — not white. */
-  --paper:        #f7f4ec;
-  --paper-2:      #efeade;
-  --ink:          #14130e;
-  --ink-2:        #4a463b;
-  --ink-3:        #7d776a;
-  --rule:         #d8d2c2;
-  --rule-strong:  #14130e;
-  --accent:       #a32b1c;
+  /* Paper is near-white with only a trace of warmth — the previous cream read
+     yellow and dated. Accent is a deep petrol teal: still editorial, but calm,
+     and uncommon in tech publications (blue and red are everywhere).
+     To try another accent, change --accent in all three palette blocks:
+       oxblood  #6d1f2b / dark #d98b93
+       ink navy #17395e / dark #7fb0dd  */
+  --paper:        #fcfbf9;
+  --paper-2:      #f1efeb;
+  --ink:          #111315;
+  --ink-2:        #4c5155;
+  --ink-3:        #7f858a;
+  --rule:         #dcdad3;
+  --rule-strong:  #111315;
+  --accent:       #0e5b57;
   --accent-ink:   #ffffff;
-  --highlight:    #f3e6c8;
+  --highlight:    #d7ebe8;
 
   --serif: "Newsreader Variable", "Iowan Old Style", Georgia, serif;
   --cond: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif;
@@ -35,30 +40,30 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper:       #1a1814;
-    --paper-2:     #23201a;
-    --ink:         #e8e2d4;
-    --ink-2:       #b3ab98;
-    --ink-3:       #8a8170;
-    --rule:        #322e26;
-    --rule-strong: #4d4739;
-    --accent:      #e2705a;
-    --accent-ink:  #100f0c;
-    --highlight:   #2a2113;
+    --paper:       #15171a;
+    --paper-2:     #1d2025;
+    --ink:         #e9eaeb;
+    --ink-2:       #a9aeb3;
+    --ink-3:       #797f85;
+    --rule:        #2a2e33;
+    --rule-strong: #464c53;
+    --accent:      #63c1b7;
+    --accent-ink:  #15171a;
+    --highlight:   #16302e;
   }
 }
 
 :root[data-theme="dark"] {
-  --paper:       #1a1814;
-  --paper-2:     #23201a;
-  --ink:         #e8e2d4;
-  --ink-2:       #b3ab98;
-  --ink-3:       #8a8170;
-  --rule:        #322e26;
-  --rule-strong: #4d4739;
-  --accent:      #e2705a;
-  --accent-ink:  #100f0c;
-  --highlight:   #2a2113;
+  --paper:       #15171a;
+  --paper-2:     #1d2025;
+  --ink:         #e9eaeb;
+  --ink-2:       #a9aeb3;
+  --ink-3:       #797f85;
+  --rule:        #2a2e33;
+  --rule-strong: #464c53;
+  --accent:      #63c1b7;
+  --accent-ink:  #15171a;
+  --highlight:   #16302e;
 }
 
 * { box-sizing: border-box; }
@@ -315,14 +320,21 @@ a { color: inherit; text-decoration: none; }
 /* Strip the rule off the last column at each breakpoint. */
 .grid > .story:nth-child(4n) { border-right: 0; margin-right: 0; padding-right: 0; }
 
+/* ...and off the final item regardless of column, since the last row is usually
+   incomplete and would otherwise trail a rule into empty space. Declared before
+   the media queries so the breakpoint rules can re-add it where needed. */
+.grid > .story:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+
 @media (max-width: 74rem) {
   .grid > .story:nth-child(4n) { border-right: 1px solid var(--rule); margin-right: var(--gutter); padding-right: var(--gutter); }
-  .grid > .story:nth-child(3n) { border-right: 0; margin-right: 0; padding-right: 0; }
+  .grid > .story:nth-child(3n),
+  .grid > .story:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
 }
 
 @media (max-width: 56rem) {
   .grid > .story:nth-child(3n) { border-right: 1px solid var(--rule); margin-right: var(--gutter); padding-right: var(--gutter); }
-  .grid > .story:nth-child(2n) { border-right: 0; margin-right: 0; padding-right: 0; }
+  .grid > .story:nth-child(2n),
+  .grid > .story:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
 }
 
 .story-title {
@@ -548,4 +560,63 @@ a { color: inherit; text-decoration: none; }
 @media print {
   .nav, .foot, .backlink { display: none; }
   body { background: #fff; color: #000; }
+}
+
+
+/* ---------- section index (topic pages) ---------- */
+
+.index-head {
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 0.9rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.index-title {
+  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.028em;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.index-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 52rem;
+}
+
+.index-list > li {
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.3rem;
+}
+
+.index-list > li:last-child { border-bottom: 0; }
+
+.index-item-title {
+  font-size: clamp(1.35rem, 2.3vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.018em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.index-item-title a:hover { color: var(--accent); }
+
+.index-item-dek {
+  margin: 0.15rem 0 0;
+  color: var(--ink-2);
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 42rem;
 }

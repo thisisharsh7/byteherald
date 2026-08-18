@@ -308,3 +308,51 @@ shouted. Warmed and softened: paper `#1a1814`, ink `#e8e2d4`, secondary ink
 `#b3ab98` (slightly brighter for legibility), rules `#322e26` / `#4d4739`.
 
 Verified both themes at 1440px and mobile after the change.
+
+### 2026-08-18 — Phase 5c (topic-page layout bug, palette)
+**BUG — fixed:** topic pages reused the front-page 4-column grid, so a topic with
+2 posts rendered as two cramped columns, two empty columns, dangling vertical
+rules, and a headline wrapping over four lines. Grids leave holes; a ruled index
+list reads correctly at any count. Added `.index-*` styles and rewrote
+`src/pages/topics/[tag].astro` as a section index (big serif topic name, count
+right-aligned, one story per row separated by hairlines, 52rem measure).
+**Rule: a fixed-column grid is wrong for any collection whose size we don't
+control.**
+
+**BUG — fixed:** `2 dispatches` rendered as `2DISPATCHES` — the number and the
+word were on separate JSX lines and Astro collapsed the whitespace between them.
+Now built as a single interpolated string.
+
+**Fixed:** the final grid item kept its right-hand rule when the last row was
+incomplete (11 items across 4 columns), trailing a rule into empty space. Added
+`:last-child` border-strip at every breakpoint.
+
+**Palette changed** (user: "i dont' like the color"). Was warm cream newsprint
+(#f7f4ec) + newspaper red (#a32b1c) / warm charcoal + salmon. The cream read
+yellow and dated and the red was loud. Now near-white paper (#fcfbf9) with only a
+trace of warmth, true ink (#111315), and a deep petrol teal accent (#0e5b57 light
+/ #63c1b7 dark) — calm, editorial, and uncommon in tech publications where blue
+and red dominate. Dark mode moved from warm brown-black to cool slate (#15171a).
+Alternates are noted in a comment above the light palette (oxblood, ink navy) —
+swapping means changing `--accent` in three blocks.
+
+### Naming / SEO research (2026-08-18)
+User asked for a different brand name + logo, researched for SEO.
+
+Finding that matters: **keyword-rich domains no longer improve rankings** (Google
+confirmed). Domain affects SEO only indirectly, via trust, click-through and brand
+signal — and brandable names with consistent identity are more likely to be cited
+by AI search engines than keyword-stuffed ones. So a short brandable name beats
+`best-tech-news.com`.
+
+Availability checked properly via **RDAP** (`https://rdap.org/domain/<name>`,
+404 = available), validated against controls (google.com -> taken, nonsense ->
+available). **Do not use `whois` for this** — it silently fell back to the IANA
+server and returned TLD records instead of domain records, so every new-gTLD
+answer was a false "taken". That produced a completely wrong first pass.
+
+Available (verified): galleywire.com, galleywire.press, thegalleywire.com,
+readgalley.com, coldgalley.com, kickerwire.com.
+Taken: every single-word candidate (slugline, coldtype, colophon, standfirst,
+newsprint, wirehead, galley, kicker, nightdesk, copydesk, wiredesk, +many).
+Recommendation pending user's pick — nothing renamed yet.

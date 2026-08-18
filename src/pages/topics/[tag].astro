@@ -9,6 +9,7 @@ export function getStaticPaths() {
 const { tag } = Astro.props;
 const list = byTopic(tag);
 const label = tag.replace(/-/g, " ");
+const count = `${list.length} ${list.length === 1 ? "dispatch" : "dispatches"}`;
 ---
 
 <Base
@@ -16,27 +17,27 @@ const label = tag.replace(/-/g, " ");
   description={`Every Wirehead dispatch filed under ${label}.`}
   activeTopic={tag}
 >
-  <div class="front">
-    <div class="divider" style="border-top:0;margin-top:0;padding-top:1.5rem">
-      <h1 class="section-head">
-        {label} &nbsp;·&nbsp; {list.length}
-        {list.length === 1 ? "dispatch" : "dispatches"}
-      </h1>
-    </div>
-    <div class="grid">
+  <section style="padding-top:clamp(1.6rem,3.5vw,2.6rem)">
+    <header class="index-head">
+      <h1 class="index-title">{label}</h1>
+      <span class="meta">{count}</span>
+    </header>
+
+    <ol class="index-list">
       {list.map((s) => (
-        <article class="story">
-          <div class="kicker-row">
+        <li>
+          <div class="kicker-row" style="margin-bottom:0.15rem">
             <span class="kicker">{s.section}</span>
             <span class="meta">{timeLine(s.when)}</span>
           </div>
-          <h2 class="story-title">
+          <h2 class="index-item-title">
             <a href={`/posts/${s.slug}/`}>{s.title}</a>
           </h2>
-          <p class="story-dek">{s.dek}</p>
-        </article>
+          <p class="index-item-dek">{s.dek}</p>
+        </li>
       ))}
-    </div>
-  </div>
-  <a class="backlink" href="/">&larr; Front page</a>
+    </ol>
+
+    <a class="backlink" href="/">&larr; Front page</a>
+  </section>
 </Base>
