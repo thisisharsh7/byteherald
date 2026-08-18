@@ -1,0 +1,43 @@
+---
+import Base from "../layouts/Base.astro";
+import { stories, timeLine } from "../lib/posts";
+
+const recent = stories.slice(0, 5);
+---
+
+<Base
+  title="Page not found — The Byte Herald"
+  description="That page doesn't exist. Here are the latest stories."
+>
+  <section class="article" style="padding-bottom:1rem">
+    <div class="article-head">
+      <div class="kicker-row" style="justify-content:center">
+        <span class="kicker">Error 404</span>
+      </div>
+      <h1 class="article-title">No such page</h1>
+      <p class="article-dek">
+        The address doesn't match anything we've published. The latest stories are
+        below.
+      </p>
+    </div>
+    <div class="article-rule"></div>
+  </section>
+
+  <ol class="index-list" style="margin:0 auto">
+    {recent.map((s) => (
+      <li>
+        <div class="kicker-row" style="margin-bottom:0.15rem">
+          <span class="kicker">{s.section}</span>
+          <span class="meta">{timeLine(s.when)}</span>
+        </div>
+        <h2 class="index-item-title">
+          <a href={`/posts/${s.slug}/`}>{s.title}</a>
+        </h2>
+      </li>
+    ))}
+  </ol>
+
+  <div style="text-align:center">
+    <a class="backlink" href="/">&larr; Front page</a>
+  </div>
+</Base>

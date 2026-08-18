@@ -432,3 +432,51 @@ the user's say-so since deleting a deployment is irreversible.
 
 Verified live: /, /topics/ai/, /rss.xml, /robots.txt, /sitemap-index.xml and an
 article all 200; canonical points at byteherald.pages.dev.
+
+### 2026-08-18 — Phase 8 (reader-facing metadata, responsive audit, full SEO)
+
+**Removed insider metadata (user: "i don't like these what are these hey people
+wil read i what are thse we are showing").** Correct call — "No. 2",
+"Issue No. 2" and "16 dispatches" were inventory stats, meaningless to a reader,
+and an issue number is theatre on a site with a two-day run. Replaced:
+- masthead bar right: "No. 2 · Written by machine" -> "Last updated {time}"
+  (freshness is the one thing a news reader actually wants there)
+- footer right: the counters -> real links (Subscribe by RSS, About this site)
+- deleted `issueNumber()` from posts.ts so nothing can resurface it
+The AI disclosure still runs in the footer prose and on /about/ — it was moved,
+not dropped.
+
+**New pages:** `/about/` (how stories are selected, what the writer will and won't
+do, where to be sceptical, corrections policy — also the E-E-A-T signal Google
+wants from a publication) and a real `404` that lists recent stories.
+
+**Responsive audit.** Programmatic, not eyeballed: rendered every page type into
+an iframe at 13 widths (320→1920) and measured `scrollWidth` against the viewport,
+identifying the widest offending element when over. Result: **6 page types × 13
+widths, zero horizontal overflow.** Visually confirmed /about/ at 390px (drop cap,
+measure, subheads) via device emulation.
+*Tooling note:* `resize_page` silently stopped affecting an already-loaded tab —
+`emulate` with a `viewport` string is the reliable way to test breakpoints. The
+iframe measurement loop is better than either since it covers many widths in one
+pass.
+
+**SEO completed:**
+- `og.png` (1200×630) — no image library available, so the card was built as HTML
+  with the site's own local woff2 fonts, served over a throwaway `python3 -m
+  http.server`, and screenshotted headless at 1200×630. `.og/` is gitignored.
+- `og:image` / `twitter:image` / `og:image:width|height|alt`
+- `<meta name="robots" content="index, follow, max-image-preview:large,
+  max-snippet:-1">` — max-image-preview matters for news surfaces
+- `BreadcrumbList` JSON-LD alongside NewsArticle/WebSite (2 blocks per article)
+- publisher `logo` + article `image` in the structured data
+- `public/_headers`: nosniff, Referrer-Policy, X-Frame-Options; immutable
+  1-year cache on `/_astro/*` (content-hashed), 7-day on og.png, 30-min on rss
+
+**Deleted the old `wirehead` Pages project** (user approved) — two live URLs with
+near-identical content was the one real duplicate-content risk. `byteherald` is
+now the only project.
+
+Verified live: /, /about/, /topics/ai/, /rss.xml, /robots.txt, /sitemap-index.xml,
+/og.png all 200; an unknown path returns 404; security headers present; og.png
+served as image/png with the intended cache header; zero "Issue No."/"dispatches"
+in the live HTML.

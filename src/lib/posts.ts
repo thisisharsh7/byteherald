@@ -95,12 +95,6 @@ export function findStory(slug: string): Story | undefined {
   return stories.find((s) => s.slug === slug);
 }
 
-/** Issue number — one per distinct publishing day, oldest day = No. 1. */
-export function issueNumber(): number {
-  const days = new Set(stories.map((s) => s.when.toISOString().slice(0, 10)));
-  return days.size;
-}
-
 export const dateLine = (d: Date) =>
   new Intl.DateTimeFormat("en-GB", {
     weekday: "long",
