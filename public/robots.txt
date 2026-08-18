@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wirehead.pages.dev/sitemap-index.xml

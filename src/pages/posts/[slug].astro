@@ -12,7 +12,16 @@ const html = marked.parse(story.body, { async: false }) as string;
 const readingMinutes = Math.max(1, Math.round(story.body.split(/\s+/).length / 220));
 ---
 
-<Base title={`${story.title} — The Wirehead`} description={story.dek}>
+<Base
+  title={`${story.title} — The Wirehead`}
+  description={story.dek}
+  article={{
+    headline: story.title,
+    published: story.when,
+    tags: story.tags,
+    generator: story.generator,
+  }}
+>
   <article class="article">
     <div class="article-head">
       <div class="kicker-row" style="justify-content:center">

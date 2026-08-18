@@ -356,3 +356,40 @@ readgalley.com, coldgalley.com, kickerwire.com.
 Taken: every single-word candidate (slugline, coldtype, colophon, standfirst,
 newsprint, wirehead, galley, kicker, nightdesk, copydesk, wiredesk, +many).
 Recommendation pending user's pick — nothing renamed yet.
+
+### 2026-08-18 — Phase 6 (SEO fundamentals, no domain purchase)
+User isn't buying a domain yet and asked whether Cloudflare Pages ranks on Google.
+
+**Answer: yes.** `*.pages.dev` is indexed and ranks normally; there is no penalty
+for being on it. The duplicate-content warnings in the wild all describe having
+BOTH a custom domain and the pages.dev subdomain serving the same content — not
+applicable with only pages.dev. Migration later is a standard 301 + Search Console
+change of address, and cheap now while there's little accumulated authority.
+
+Implemented the things that actually gate indexing (all free):
+- `site: "https://wirehead.pages.dev"` + `trailingSlash: "always"` in astro.config
+  (required for absolute canonical/sitemap/RSS URLs, and keeps canonical and
+  sitemap URLs byte-identical — mismatched trailing slashes split ranking signals)
+- `@astrojs/sitemap` -> `sitemap-index.xml` + `sitemap-0.xml`, 66 URLs
+- `public/robots.txt` pointing at the sitemap
+- `<link rel="canonical">` on every page, built from `Astro.url` + `Astro.site`
+- JSON-LD: `WebSite` site-wide, `NewsArticle` on posts (headline, datePublished,
+  keywords, publisher). **`author` is stated as the Organization, not a person** —
+  emitting a fabricated human byline would misrepresent provenance to Google.
+- OG + Twitter card tags, `og:type` switches to `article` on posts
+- `src/pages/rss.xml.ts` -> /rss.xml, 16 items, plus `<link rel="alternate">`
+  autodiscovery in the head
+
+Verified: both XML files parse, 66 sitemap URLs, 16 RSS items, canonical matches
+sitemap form exactly.
+
+**Known ranking risk, unrelated to hosting:** Google's spam policy targets
+"scaled content abuse" — mass-produced content made primarily to rank. A site
+publishing ~6 machine-written posts per run is squarely in the shape that policy
+describes. The mitigations already in place (every post links its sources, no
+reproduction of source text, explicit AI disclosure, refusal to publish untagged
+or unsourced drafts) help, but fewer/better posts is the real defence. Flagged to
+the user rather than silently assuming volume is safe.
+
+Still not done: no OG image (needs image generation), no per-topic RSS, nothing
+deployed since the redesign.
