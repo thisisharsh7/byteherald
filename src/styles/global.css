@@ -1,47 +1,40 @@
 /* ============================================================
-   The Byte Herald — broadsheet
-   Type: Newsreader (display + text), IBM Plex Sans Condensed (furniture)
+   The Byte Herald — typewriter / zine
+   Display: Special Elite (distressed typewriter)
+   Text + furniture: JetBrains Mono (variable)
+
+   Monospace long-form needs more leading and a wider measure than a serif —
+   mono glyphs are wider per character, so a 36rem serif measure and a 36rem
+   mono measure are not the same line length. Everything below is tuned for
+   mono; do not port serif numbers back in.
    ============================================================ */
 
 :root {
-  /* Paper is near-white with only a trace of warmth — the previous cream read
-     yellow and dated. Accent is a deep petrol teal: still editorial, but calm,
-     and uncommon in tech publications (blue and red are everywhere).
-     To try another accent, change --accent in all three palette blocks:
-       oxblood  #6d1f2b / dark #d98b93
-       ink navy #17395e / dark #7fb0dd  */
-  --paper:        #fcfbf9;
-  --paper-2:      #f1efeb;
-  --ink:          #111315;
-  --ink-2:        #4c5155;
-  --ink-3:        #7f858a;
-  --rule:         #dcdad3;
-  --rule-strong:  #111315;
-  --accent:       #0e5b57;
-  --accent-ink:   #ffffff;
-  --highlight:    #d7ebe8;
+  --paper:       #e7dec0;
+  --paper-2:     #ddd3b1;
+  --paper-3:     #d2c79f;
+  --ink:         #16130d;
+  --ink-2:       #514a35;
+  --ink-3:       #7d7458;
+  --rule:        #b3a880;
+  --rule-strong: #16130d;
+  --accent:      #b3221b;
+  --mark:        #f7e14e;
 
-  --serif: "Newsreader Variable", "Iowan Old Style", Georgia, serif;
-  --cond: "IBM Plex Sans Condensed", "Helvetica Neue", Arial, sans-serif;
-  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --display: "Special Elite", "American Typewriter", Georgia, serif;
+  --mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Fluid scale. Lead headline is deliberately much larger than everything
-     else — the hierarchy is the whole point. */
-  --fs-nameplate: clamp(2.1rem, 6.6vw, 4.6rem);
-  --fs-lead:      clamp(2.1rem, 5.2vw, 3.75rem);
-  --fs-second:    clamp(1.4rem, 2.4vw, 1.95rem);
-  --fs-item:      clamp(1.12rem, 1.5vw, 1.32rem);
-  --fs-body:      1.1875rem;
+  --fs-nameplate: clamp(2.1rem, 6.4vw, 4.4rem);
+  --fs-lead:      clamp(2rem, 5vw, 3.6rem);
+  --fs-item:      clamp(1.05rem, 1.4vw, 1.22rem);
+  --fs-body:      1rem;
   --fs-kicker:    0.68rem;
 
-  --measure: 36rem;
-  --gutter: clamp(1rem, 3vw, 2.25rem);
+  /* Wide enough that the column doesn't read as a ribbon on a big screen.
+     ~62 mono characters. */
+  --measure: 46rem;
+  --gutter: clamp(1rem, 2.6vw, 2rem);
 }
-
-/* Deliberately light-only. This is a newspaper; newsprint is the whole idea, and
-   a dark broadsheet reads as a terminal rather than a publication. There is no
-   dark palette to fall out of sync — if one is ever wanted, add it here and
-   nowhere else. */
 
 * { box-sizing: border-box; }
 
@@ -51,182 +44,159 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--serif);
+  font-family: var(--mono);
   font-size: var(--fs-body);
   font-weight: 400;
-  line-height: 1.6;
-  font-optical-sizing: auto;
+  line-height: 1.72;
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 a { color: inherit; text-decoration: none; }
 
-.shell {
-  max-width: 78rem;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
+.shell { max-width: 74rem; margin: 0 auto; padding: 0 var(--gutter); }
 
 /* ---------- furniture ---------- */
 
-.kicker,
-.meta,
-.nav a,
-.tag,
-.label {
-  font-family: var(--cond);
-  font-weight: 600;
+.kicker, .meta, .nav a, .tag, .label {
+  font-family: var(--mono);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.13em;
   font-size: var(--fs-kicker);
   line-height: 1.4;
 }
 
 .kicker { color: var(--accent); }
-.meta { color: var(--ink-3); font-weight: 500; letter-spacing: 0.08em; }
+.meta { color: var(--ink-3); font-weight: 500; letter-spacing: 0.1em; }
 
 .kicker-row {
   display: flex;
   align-items: baseline;
-  gap: 0.7rem;
+  gap: 0.8rem;
   flex-wrap: wrap;
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.6rem;
 }
 
 /* ---------- masthead ---------- */
 
-/* One rule closes the masthead. Earlier this stacked four horizontal lines
-   (bar, tagline, nav, plus a double rule) before the reader reached a story —
-   separation is done with space instead. */
-.masthead { border-bottom: 1px solid var(--rule-strong); }
+.masthead { border-bottom: 1px dashed var(--rule); }
 
 .masthead-bar {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.7rem 0 0.4rem;
-  font-family: var(--cond);
+  padding: 0.9rem 0 0.5rem;
+  font-family: var(--mono);
   font-size: var(--fs-kicker);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.13em;
   color: var(--ink-3);
+  border-bottom: 1px dashed var(--rule);
 }
 
 .nameplate {
   display: block;
   text-align: center;
+  font-family: var(--display);
   font-size: var(--fs-nameplate);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  padding: clamp(1rem, 2.6vw, 2rem) 0 0.5rem;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  padding: clamp(1.2rem, 3vw, 2.2rem) 0 0.4rem;
 }
 
 .nameplate .the {
   display: block;
-  font-family: var(--cond);
+  font-family: var(--mono);
   font-size: var(--fs-kicker);
-  font-weight: 600;
-  letter-spacing: 0.34em;
+  font-weight: 700;
+  letter-spacing: 0.4em;
   text-transform: uppercase;
   color: var(--ink-3);
-  margin-bottom: 0.5rem;
-  padding-left: 0.34em;
+  margin-bottom: 0.7rem;
+  padding-left: 0.4em;
 }
 
-/* Single ink colour. A two-tone nameplate reads as a tech logo; broadsheet
-   mastheads are one colour and let the type do the work. */
-.nameplate em {
-  font-style: normal;
-  color: inherit;
-}
+.nameplate em { font-style: normal; color: inherit; }
 
 .tagline {
   text-align: center;
-  font-family: var(--cond);
-  font-size: 0.74rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   color: var(--ink-3);
-  padding: 0 0 0.2rem;
   margin: 0;
+  padding: 0 0 0.2rem;
 }
 
 .nav {
   display: flex;
   justify-content: center;
-  gap: clamp(0.9rem, 2.4vw, 2rem);
+  gap: clamp(0.8rem, 2.2vw, 1.8rem);
   flex-wrap: wrap;
-  padding: 1.1rem 0 1rem;
+  padding: 1.2rem 0 1rem;
 }
 
 .nav a { color: var(--ink-2); white-space: nowrap; }
 .nav a:hover { color: var(--accent); }
 .nav a[aria-current="page"] {
   color: var(--ink);
-  box-shadow: inset 0 -0.4em 0 var(--highlight);
+  background: var(--mark);
+  box-shadow: 0 0 0 0.22em var(--mark);
 }
 
-/* ---------- front page grid ---------- */
+/* ---------- front page ---------- */
 
 .front {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 0 var(--gutter);
-  padding: clamp(1.4rem, 3vw, 2.5rem) 0 0;
+  padding: clamp(1.6rem, 3.5vw, 2.8rem) 0 0;
 }
 
 .lead { grid-column: 1 / 9; }
 
 .rail {
   grid-column: 9 / 13;
-  border-left: 1px solid var(--rule);
+  border-left: 1px dashed var(--rule);
   padding-left: var(--gutter);
 }
 
 .lead-title {
+  font-family: var(--display);
   font-size: var(--fs-lead);
-  font-weight: 600;
-  line-height: 1.03;
-  letter-spacing: -0.028em;
-  margin: 0 0 0.6rem;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.8rem;
   text-wrap: balance;
 }
 
 .lead-title a:hover { color: var(--accent); }
 
 .lead-dek {
-  font-size: clamp(1.1rem, 1.7vw, 1.4rem);
-  line-height: 1.45;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.6;
   color: var(--ink-2);
-  margin: 0 0 1rem;
-  max-width: 34rem;
+  margin: 0 0 1.1rem;
+  max-width: 38rem;
 }
 
 .lead-excerpt {
   margin: 0;
   color: var(--ink-2);
-  max-width: 34rem;
-  /* Two-column pull like a broadsheet, once there's room. */
-  columns: 2;
-  column-gap: var(--gutter);
-  column-rule: 1px solid var(--rule);
-  font-size: 1rem;
-  line-height: 1.62;
+  max-width: 38rem;
+  font-size: 0.92rem;
+  line-height: 1.72;
 }
 
-@media (max-width: 60rem) {
-  .lead-excerpt { columns: 1; }
-}
-
-.rail-head,
-.section-head {
-  font-family: var(--cond);
+.rail-head, .section-head {
+  font-family: var(--mono);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  font-size: 0.7rem;
   color: var(--ink);
   padding-bottom: 0.6rem;
   margin: 0 0 1rem;
@@ -238,28 +208,28 @@ a { color: inherit; text-decoration: none; }
 .rail-list li {
   counter-increment: rail;
   display: grid;
-  grid-template-columns: 1.6rem 1fr;
+  grid-template-columns: 1.7rem 1fr;
   gap: 0.7rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--rule);
+  padding: 0.9rem 0;
+  border-bottom: 1px dashed var(--rule);
 }
 
 .rail-list li:last-child { border-bottom: 0; }
 
 .rail-list li::before {
-  content: counter(rail);
-  font-family: var(--cond);
+  content: counter(rail) ".";
+  font-family: var(--mono);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 0.92rem;
   color: var(--accent);
-  line-height: 1.25;
+  line-height: 1.5;
 }
 
 .rail-title {
-  font-size: 1.02rem;
-  font-weight: 500;
-  line-height: 1.24;
-  margin: 0 0 0.2rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.25rem;
   text-wrap: balance;
 }
 
@@ -267,16 +237,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- story grid ---------- */
 
-/* No rule of its own — the section heading below carries the only line, so the
-   two don't double up. */
-.divider {
-  grid-column: 1 / -1;
-  margin: clamp(1.8rem, 3.5vw, 2.8rem) 0 0;
-}
+.divider { grid-column: 1 / -1; margin: clamp(1.8rem, 3.5vw, 2.8rem) 0 0; }
 
-/* Explicit column counts rather than auto-fill: the number of columns has to be
-   knowable in CSS so :nth-child can strip the rule off the last column.
-   auto-fill leaves dangling right-hand rules that read as unfinished. */
 .grid {
   grid-column: 1 / -1;
   display: grid;
@@ -289,39 +251,36 @@ a { color: inherit; text-decoration: none; }
 @media (max-width: 34rem) { .grid { grid-template-columns: 1fr; } }
 
 .story {
-  padding: 0 var(--gutter) 1.6rem 0;
+  padding: 1.5rem var(--gutter) 1.7rem 0;
   margin-right: var(--gutter);
-  border-right: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding-top: 1.4rem;
+  border-right: 1px dashed var(--rule);
+  border-bottom: 1px dashed var(--rule);
 }
 
-/* Strip the rule off the last column at each breakpoint. */
-.grid > .story:nth-child(4n) { border-right: 0; margin-right: 0; padding-right: 0; }
-
-/* ...and off the final item regardless of column, since the last row is usually
-   incomplete and would otherwise trail a rule into empty space. Declared before
-   the media queries so the breakpoint rules can re-add it where needed. */
+.grid > .story:nth-child(4n),
 .grid > .story:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
 
 @media (max-width: 74rem) {
-  .grid > .story:nth-child(4n) { border-right: 1px solid var(--rule); margin-right: var(--gutter); padding-right: var(--gutter); }
+  .grid > .story:nth-child(4n) { border-right: 1px dashed var(--rule); margin-right: var(--gutter); padding-right: var(--gutter); }
   .grid > .story:nth-child(3n),
   .grid > .story:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
 }
 
 @media (max-width: 56rem) {
-  .grid > .story:nth-child(3n) { border-right: 1px solid var(--rule); margin-right: var(--gutter); padding-right: var(--gutter); }
+  .grid > .story:nth-child(3n) { border-right: 1px dashed var(--rule); margin-right: var(--gutter); padding-right: var(--gutter); }
   .grid > .story:nth-child(2n),
   .grid > .story:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
 }
 
+@media (max-width: 34rem) {
+  .story { border-right: 0; margin-right: 0; padding-right: 0; }
+}
+
 .story-title {
+  font-family: var(--display);
   font-size: var(--fs-item);
-  font-weight: 600;
-  line-height: 1.16;
-  letter-spacing: -0.014em;
-  margin: 0 0 0.4rem;
+  line-height: 1.22;
+  margin: 0 0 0.5rem;
   text-wrap: balance;
 }
 
@@ -329,224 +288,164 @@ a { color: inherit; text-decoration: none; }
 
 .story-dek {
   margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.68;
   color: var(--ink-2);
 }
 
 /* ---------- tags ---------- */
 
-.tags { display: flex; flex-wrap: wrap; gap: 0.35rem 0.5rem; margin-top: 0.8rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem 0.55rem; margin-top: 1rem; }
 
-.tag {
-  color: var(--ink-3);
-  font-weight: 500;
-  letter-spacing: 0.09em;
-}
-
-.tag::before { content: "#"; opacity: 0.5; }
+.tag { color: var(--ink-3); font-weight: 500; letter-spacing: 0.11em; }
+.tag::before { content: "["; opacity: 0.55; }
+.tag::after { content: "]"; opacity: 0.55; }
 .tag:hover { color: var(--accent); }
 
-/* ---------- article ---------- */
+/* ---------- article ----------
+   The reading column is a CENTRED BLOCK with LEFT-ALIGNED text inside it.
+   Both halves matter:
+   - centring the text itself makes headline and dek ragged on both sides and
+     hard to scan;
+   - left-aligning the block inside the wide shell leaves a lopsided void on the
+     right while the masthead stays centred, which reads as a broken layout.
+   Centre the container, align the type left. */
 
-.article { padding: clamp(1.6rem, 4vw, 3rem) 0 0; }
-
-.article-head {
-  max-width: 44rem;
-  margin: 0 auto clamp(1.6rem, 3vw, 2.4rem);
-  text-align: center;
+.article {
+  padding: clamp(1.8rem, 4vw, 3.2rem) 0 0;
+  max-width: var(--measure);
+  margin: 0 auto;
 }
 
+.article-head { margin: 0 0 1.6rem; }
+
 .article-title {
-  font-size: clamp(1.9rem, 4.4vw, 3.1rem);
-  font-weight: 600;
-  line-height: 1.06;
-  letter-spacing: -0.028em;
-  margin: 0.5rem 0 0.75rem;
+  font-family: var(--display);
+  font-size: clamp(2.1rem, 5.4vw, 3.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  margin: 0.6rem 0 1rem;
   text-wrap: balance;
 }
 
+.article-title .accent { color: var(--accent); }
+
 .article-dek {
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
-  line-height: 1.45;
-  color: var(--ink-2);
-  font-style: italic;
+  font-size: clamp(1rem, 1.5vw, 1.16rem);
+  line-height: 1.62;
+  color: var(--ink);
   margin: 0;
 }
 
+.article-dek mark, .prose mark {
+  background: var(--mark);
+  color: var(--ink);
+  padding: 0.05em 0.22em;
+}
+
 .article-rule {
-  max-width: 8rem;
-  margin: 0 auto clamp(1.8rem, 3.5vw, 2.6rem);
-  border-top: 1px solid var(--rule-strong);
+  margin: 0 0 clamp(1.6rem, 3vw, 2.4rem);
+  border-top: 1px dashed var(--rule);
 }
 
 .prose {
-  max-width: var(--measure);
-  margin: 0 auto;
-  font-size: clamp(1.1rem, 1.35vw, 1.22rem);
-  line-height: 1.72;
+  margin: 0;
+  font-size: clamp(0.95rem, 1.12vw, 1.05rem);
+  line-height: 1.85;
 }
 
-.prose > p { margin: 0 0 1.35rem; }
+.prose > p { margin: 0 0 1.5rem; }
 
-/* Drop cap — the single most publication-like detail available in CSS. */
-.prose > p:first-of-type::first-letter {
-  float: left;
-  font-size: 3.5em;
-  line-height: 0.82;
-  font-weight: 600;
-  padding: 0.06em 0.09em 0 0;
+.prose h2 {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  line-height: 1.2;
+  margin: 2.6rem 0 0.9rem;
+}
+
+/* Section marker, as in a printed manifesto. */
+.prose h2::before {
+  content: "§ ";
   color: var(--accent);
 }
 
-.prose > p:first-of-type::first-line {
-  font-variant-caps: small-caps;
-  letter-spacing: 0.02em;
-}
+.prose em { font-style: italic; color: inherit; }
 
-.prose em { color: var(--ink-2); }
-.prose strong { font-weight: 700; }
+/* Inverse highlight — the emphasis device from the reference. */
+.prose strong {
+  font-weight: 700;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.05em 0.28em;
+}
 
 .prose a {
   color: var(--accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.16em;
+  text-underline-offset: 0.2em;
 }
 
 .prose code {
   font-family: var(--mono);
-  font-size: 0.86em;
-  background: var(--paper-2);
-  border: 1px solid var(--rule);
-  border-radius: 2px;
+  font-size: 0.9em;
+  background: var(--mark);
   padding: 0.08em 0.3em;
 }
 
 .prose blockquote {
-  margin: 1.6rem 0;
-  padding-left: 1.1rem;
+  margin: 1.8rem 0;
+  padding-left: 1.2rem;
   border-left: 3px solid var(--accent);
-  font-style: italic;
   color: var(--ink-2);
 }
 
-/* ---------- endnote / sources ---------- */
+/* ---------- endnote ---------- */
 
 .endnote {
-  max-width: var(--measure);
-  margin: clamp(2rem, 4vw, 3rem) auto 0;
-  padding-top: 1.1rem;
-  border-top: 1px solid var(--rule-strong);
+  margin: clamp(2.2rem, 4vw, 3.2rem) 0 0;
+  padding-top: 1.2rem;
+  border-top: 1px dashed var(--rule);
 }
 
 .endnote h2 {
-  font-family: var(--cond);
+  font-family: var(--mono);
   font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--ink-3);
-  margin: 0 0 0.7rem;
+  margin: 0 0 0.8rem;
 }
 
-.endnote ol { margin: 0; padding-left: 1.15rem; }
-
-.endnote li {
-  font-family: var(--cond);
-  font-size: 0.94rem;
-  letter-spacing: 0.005em;
-  margin-bottom: 0.3rem;
-}
+.endnote ol { margin: 0; padding-left: 1.4rem; }
+.endnote li { font-size: 0.9rem; margin-bottom: 0.4rem; }
 
 .endnote a {
   color: var(--accent);
   text-decoration: underline;
-  text-underline-offset: 0.16em;
+  text-underline-offset: 0.2em;
 }
 
 .colophon {
-  max-width: var(--measure);
-  margin: 1.4rem auto 0;
-  font-family: var(--cond);
+  margin: 1.6rem 0 0;
   font-size: 0.8rem;
-  line-height: 1.5;
-  color: var(--ink-3);
+  line-height: 1.7;
+  color: var(--ink-2);
   background: var(--paper-2);
-  border: 1px solid var(--rule);
-  padding: 0.8rem 0.95rem;
+  border: 1px dashed var(--rule);
+  padding: 0.9rem 1rem;
 }
 
-/* ---------- back link / pagination ---------- */
-
-.backlink {
-  font-family: var(--cond);
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-3);
-  display: inline-block;
-  margin-top: clamp(1.2rem, 2.5vw, 2rem);
-}
-
-.backlink:hover { color: var(--accent); }
-
-/* ---------- footer ---------- */
-
-.foot {
-  border-top: 1px solid var(--rule-strong);
-  margin-top: clamp(2.5rem, 6vw, 5rem);
-  padding: 1.5rem 0 3rem;
-  font-family: var(--cond);
-  font-size: 0.82rem;
-  line-height: 1.6;
-  color: var(--ink-3);
-}
-
-.foot-grid {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.foot strong { color: var(--ink-2); font-weight: 600; }
-
-/* ---------- responsive ---------- */
-
-@media (max-width: 62rem) {
-  .lead { grid-column: 1 / -1; }
-  .rail {
-    grid-column: 1 / -1;
-    border-left: 0;
-    padding-left: 0;
-    border-top: 1px solid var(--rule-strong);
-    margin-top: 1.8rem;
-    padding-top: 1.4rem;
-  }
-}
-
-@media (max-width: 34rem) {
-  .story {
-    border-right: 0;
-    margin-right: 0;
-    padding-right: 0;
-  }
-  .nav { gap: 0.75rem 1rem; }
-  .prose > p:first-of-type::first-letter { font-size: 3em; }
-}
-
-@media print {
-  .nav, .foot, .backlink { display: none; }
-  body { background: #fff; color: #000; }
-}
-
+.colophon strong { font-weight: 700; }
 
 /* ---------- section index (topic pages) ---------- */
 
+.index-wrap { max-width: 54rem; margin: 0 auto; }
+
 .index-head {
   border-bottom: 1px solid var(--rule-strong);
-  padding-bottom: 0.9rem;
+  padding-bottom: 1rem;
   margin-bottom: 0.4rem;
   display: flex;
   align-items: baseline;
@@ -556,57 +455,78 @@ a { color: inherit; text-decoration: none; }
 }
 
 .index-title {
-  font-size: clamp(1.9rem, 4vw, 2.9rem);
-  font-weight: 600;
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 4.4vw, 3rem);
   line-height: 1;
-  letter-spacing: -0.028em;
   margin: 0;
   text-transform: capitalize;
 }
 
-.index-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-width: 52rem;
-}
+.index-list { list-style: none; margin: 0; padding: 0; }
 
 .index-list > li {
-  padding: 1.6rem 0;
-  border-bottom: 1px solid var(--rule);
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.3rem;
+  padding: 1.7rem 0;
+  border-bottom: 1px dashed var(--rule);
 }
 
 .index-list > li:last-child { border-bottom: 0; }
 
 .index-item-title {
-  font-size: clamp(1.35rem, 2.3vw, 1.75rem);
-  font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.018em;
-  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  line-height: 1.22;
+  margin: 0 0 0.4rem;
   text-wrap: balance;
 }
 
 .index-item-title a:hover { color: var(--accent); }
 
 .index-item-dek {
-  margin: 0.15rem 0 0;
+  margin: 0;
   color: var(--ink-2);
-  font-size: 1.05rem;
-  line-height: 1.55;
-  max-width: 42rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 44rem;
 }
 
-/* ---------- footer links ---------- */
+/* ---------- misc ---------- */
+
+.backlink {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  display: inline-block;
+  margin-top: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.backlink:hover { color: var(--accent); }
+
+.foot {
+  border-top: 1px dashed var(--rule);
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  padding: 1.6rem 0 3rem;
+  font-size: 0.8rem;
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+.foot-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.foot strong { font-weight: 700; }
 
 .foot-links {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
   text-align: right;
 }
 
@@ -614,26 +534,33 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink-2);
   text-decoration: underline;
   text-decoration-color: var(--rule);
-  text-underline-offset: 0.2em;
+  text-underline-offset: 0.22em;
 }
 
 .foot-links a:hover { color: var(--accent); text-decoration-color: currentColor; }
 
+.empty { color: var(--ink-2); font-size: 0.95rem; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 62rem) {
+  .lead { grid-column: 1 / -1; }
+  .rail {
+    grid-column: 1 / -1;
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px dashed var(--rule);
+    margin-top: 1.8rem;
+    padding-top: 1.4rem;
+  }
+}
+
 @media (max-width: 40rem) {
   .foot-links { text-align: left; }
+  .nav { gap: 0.7rem 1rem; }
 }
 
-/* ---------- prose subheads (about page, longer posts) ---------- */
-
-.prose h2 {
-  font-size: 1.28rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.012em;
-  margin: 2.1rem 0 0.6rem;
+@media print {
+  .nav, .foot, .backlink { display: none; }
+  body { background: #fff; }
 }
-
-/* The drop cap belongs to the opening paragraph only; a paragraph following a
-   subhead must not get one. */
-.prose h2 + p::first-letter { float: none; font-size: inherit; color: inherit; padding: 0; }
-.prose h2 + p::first-line { font-variant-caps: normal; letter-spacing: normal; }

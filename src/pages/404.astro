@@ -9,9 +9,9 @@ const recent = stories.slice(0, 5);
   title="Page not found — The Byte Herald"
   description="That page doesn't exist. Here are the latest stories."
 >
-  <section class="article" style="padding-bottom:1rem">
+  <section class="article">
     <div class="article-head">
-      <div class="kicker-row" style="justify-content:center">
+      <div class="kicker-row">
         <span class="kicker">Error 404</span>
       </div>
       <h1 class="article-title">No such page</h1>
@@ -21,9 +21,8 @@ const recent = stories.slice(0, 5);
       </p>
     </div>
     <div class="article-rule"></div>
-  </section>
 
-  <ol class="index-list" style="margin:0 auto">
+    <ol class="index-list">
     {recent.map((s) => (
       <li>
         <div class="kicker-row" style="margin-bottom:0.15rem">
@@ -33,11 +32,10 @@ const recent = stories.slice(0, 5);
         <h2 class="index-item-title">
           <a href={`/posts/${s.slug}/`}>{s.title}</a>
         </h2>
-      </li>
-    ))}
-  </ol>
+        </li>
+      ))}
+    </ol>
 
-  <div style="text-align:center">
     <a class="backlink" href="/">&larr; Front page</a>
-  </div>
+  </section>
 </Base>

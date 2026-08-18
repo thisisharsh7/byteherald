@@ -480,3 +480,62 @@ Verified live: /, /about/, /topics/ai/, /rss.xml, /robots.txt, /sitemap-index.xm
 /og.png all 200; an unknown path returns 404; security headers present; og.png
 served as image/png with the intended cache header; zero "Issue No."/"dispatches"
 in the live HTML.
+
+### 2026-08-18 — Phase 9 (typewriter/zine redesign)
+User sent a reference (warm khaki paper, distressed typewriter display, monospace
+body, yellow highlighter marks, red § markers, left-aligned wide measure) and said
+"i told you to research" — fair, my broadsheet pick was one direction, not the
+researched field.
+
+Research: monospace/typewriter is a genuine 2026 editorial movement ("mono
+everywhere" in magazine covers, indie branding, editorial layouts), alongside
+zine/DIY systems and "imperfection as strategy". It signals craft and analog-
+computing nostalgia — which sits usefully against machine-written content.
+
+**Redesigned to that direction.** Type: `Special Elite` (distressed typewriter)
+for display, `JetBrains Mono Variable` for body and furniture — both self-hosted.
+Palette: khaki paper #e7dec0, ink #16130d, red accent #b3221b, highlighter #f7e14e.
+Dashed rules throughout instead of solid. Devices carried over from the reference:
+`§` before every prose h2 in red, `strong` renders as an inverse black highlight,
+`code`/`mark` render as yellow highlighter, tags bracketed `[like-this]`, active
+nav item highlighted in yellow. The broadsheet *structure* (lead + numbered rail +
+ruled grid) was kept — only the surface changed.
+
+**Mono needs different metrics than a serif.** Mono glyphs are wider per
+character, so line-height went to 1.72–1.85 and the measure to 46rem (~62 chars).
+A 36rem serif measure and a 36rem mono measure are not the same line length —
+noted in the stylesheet header so the serif numbers don't get ported back.
+
+**BUG — fixed (the user's "shrinked"/"not responsive" complaint).** Two separate
+mistakes, one after the other:
+1. `--measure: 36rem` centred inside a 78rem shell made the reading column a
+   narrow ribbon in a sea of empty space on a wide monitor. I had picked 36rem
+   because it fell inside the "ideal 50–75 character" guidance — optimising a
+   number instead of looking at the rendered page.
+2. Fixing that, I left-aligned the article *block* inside the wide centred shell.
+   Worse: the text hugged the left edge while the masthead stayed centred, so the
+   page looked broken rather than merely narrow.
+The correct answer is both at once: **centre the container, left-align the type
+inside it.** `.article` / `.index-wrap` now carry `max-width: var(--measure);
+margin: 0 auto`, and the stale per-child `max-width` values were removed (they
+created a second, invisible measure). Also moved the 404's story list and backlink
+inside the container — they had been escaping it to full shell width.
+
+Verified programmatically: **6 page types x 15 widths (320→2560px), zero
+horizontal overflow**, and at 2560px every reading column measures equal left and
+right gaps (balanced: true) — i.e. actually centred, not just claimed to be.
+
+Regenerated og.png and favicon.svg in the new palette/type.
+
+### Naming: "ClaudeNews" — advised against (2026-08-18)
+User asked whether to name it ClaudeNews/claudenewz since Claude writes it.
+`claudenews.com` is taken; `claudenewz.com` is available. **Availability is not
+the problem — permission is.** CLAUDE is a registered trademark (Reg. #7645254,
+Anthropic PBC). Anthropic's trademark guidelines require prior approval for
+third-party use and prohibit use implying sponsorship, endorsement, affiliation or
+relationship. A news site called ClaudeNews plainly implies an official Anthropic
+publication. Practical risks: takedown, UDRP domain seizure, and the name becomes
+wrong the moment the writer backend changes (the `api` backend is already
+model-swappable). Also `newz` reads spammy, which cuts against the E-E-A-T work.
+Recommendation: keep The Byte Herald; disclose Claude's involvement in the
+copy/colophon (already done) rather than in the trademark-bearing brand name.
