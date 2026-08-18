@@ -393,3 +393,42 @@ the user rather than silently assuming volume is safe.
 
 Still not done: no OG image (needs image generation), no per-topic RSS, nothing
 deployed since the redesign.
+
+### 2026-08-18 — Phase 7 (rename + light-only)
+User: "black doesn't look good", and Wirehead "doesn't ring anything". Asked me to
+decide rather than shortlist (consistent with the saved preference).
+
+**Renamed to "The Byte Herald".** `byteherald.com` verified available via RDAP.
+Reasoning: "Herald" is instantly a newspaper (Miami Herald, Boston Herald) and
+"Byte" is instantly tech, so the pair reads unmistakably as a tech publication
+without needing explanation. Rejected the earlier shortlist: `galleywire`,
+`coldgalley` and `kickerwire` all depend on print jargon (galley proof, kicker)
+that a reader has to already know — the exact failure the user named. `daemonpress`
+was available but "daemon" reads as "demon" to non-developers.
+
+Renamed across Base.astro, index.astro, topics/[tag].astro, posts/[slug].astro,
+rss.xml.ts, astro.config.mjs (`site`), robots.txt, package.json (`--project-name`),
+favicon (BH wordmark), and the stylesheet header. Verified zero remaining
+`wirehead` references in source; the string only survives in old post slugs, which
+is correct — changing published URLs would break links.
+
+**Dark mode removed entirely.** Two dark palettes were rejected in a row, so
+rather than guess a third: this is a newspaper, newsprint is the concept, and a
+dark broadsheet reads as a terminal. Deleted both the `prefers-color-scheme` block
+and the `[data-theme="dark"]` block; zero matches remain, so there is no second
+palette to fall out of sync. Confirmed the shipped HTML contains no
+`prefers-color-scheme`.
+
+**Masthead:** nameplate is now single-ink (was two-tone Wire/head). Real broadsheet
+mastheads are one colour; a two-tone wordmark reads as a tech logo. Also reduced
+`--fs-nameplate` since the name is now two words.
+
+**Deployed to a new Pages project.** https://byteherald.pages.dev
+The old `wirehead.pages.dev` project still exists and still serves the old build —
+nothing was deleted. Worth knowing: two live URLs serving similar content is the
+one situation where the duplicate-content concern is real, so the old project
+should be deleted (or redirected) rather than left indefinitely. Not done without
+the user's say-so since deleting a deployment is irreversible.
+
+Verified live: /, /topics/ai/, /rss.xml, /robots.txt, /sitemap-index.xml and an
+article all 200; canonical points at byteherald.pages.dev.

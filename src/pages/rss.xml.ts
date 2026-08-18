@@ -4,7 +4,7 @@ import { stories } from "../lib/posts";
 
 export function GET(context: APIContext) {
   return rss({
-    title: "The Wirehead",
+    title: "The Byte Herald",
     description:
       "Trending technology stories from Hacker News, Lobsters and independent feeds, read and written up automatically.",
     site: context.site!,

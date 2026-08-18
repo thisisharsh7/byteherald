@@ -1,5 +1,5 @@
 /* ============================================================
-   Wirehead — broadsheet
+   The Byte Herald — broadsheet
    Type: Newsreader (display + text), IBM Plex Sans Condensed (furniture)
    ============================================================ */
 
@@ -27,7 +27,7 @@
 
   /* Fluid scale. Lead headline is deliberately much larger than everything
      else — the hierarchy is the whole point. */
-  --fs-nameplate: clamp(2.6rem, 8vw, 5.5rem);
+  --fs-nameplate: clamp(2.1rem, 6.6vw, 4.6rem);
   --fs-lead:      clamp(2.1rem, 5.2vw, 3.75rem);
   --fs-second:    clamp(1.4rem, 2.4vw, 1.95rem);
   --fs-item:      clamp(1.12rem, 1.5vw, 1.32rem);
@@ -38,33 +38,10 @@
   --gutter: clamp(1rem, 3vw, 2.25rem);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper:       #15171a;
-    --paper-2:     #1d2025;
-    --ink:         #e9eaeb;
-    --ink-2:       #a9aeb3;
-    --ink-3:       #797f85;
-    --rule:        #2a2e33;
-    --rule-strong: #464c53;
-    --accent:      #63c1b7;
-    --accent-ink:  #15171a;
-    --highlight:   #16302e;
-  }
-}
-
-:root[data-theme="dark"] {
-  --paper:       #15171a;
-  --paper-2:     #1d2025;
-  --ink:         #e9eaeb;
-  --ink-2:       #a9aeb3;
-  --ink-3:       #797f85;
-  --rule:        #2a2e33;
-  --rule-strong: #464c53;
-  --accent:      #63c1b7;
-  --accent-ink:  #15171a;
-  --highlight:   #16302e;
-}
+/* Deliberately light-only. This is a newspaper; newsprint is the whole idea, and
+   a dark broadsheet reads as a terminal rather than a publication. There is no
+   dark palette to fall out of sync — if one is ever wanted, add it here and
+   nowhere else. */
 
 * { box-sizing: border-box; }
 
@@ -158,9 +135,11 @@ a { color: inherit; text-decoration: none; }
   padding-left: 0.34em;
 }
 
+/* Single ink colour. A two-tone nameplate reads as a tech logo; broadsheet
+   mastheads are one colour and let the type do the work. */
 .nameplate em {
   font-style: normal;
-  color: var(--accent);
+  color: inherit;
 }
 
 .tagline {

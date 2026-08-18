@@ -27,7 +27,7 @@ const nav = navTopics();
 const issue = issueNumber();
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const SITE_NAME = "The Wirehead";
+const SITE_NAME = "The Byte Herald";
 
 // Structured data. The author is stated as the software, not a person — passing a
 // fabricated human byline to Google would be a lie about provenance.
@@ -80,7 +80,7 @@ const jsonLd = article
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
 
-    <meta name="generator" content="Wirehead" />
+    <meta name="generator" content="Byte Herald" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link
       rel="alternate"
@@ -99,7 +99,7 @@ const jsonLd = article
         </div>
 
         <a class="nameplate" href="/">
-          <span class="the">The</span>Wire<em>head</em>
+          <span class="the">The</span>Byte&nbsp;<em>Herald</em>
         </a>
 
         <p class="tagline">
@@ -130,7 +130,7 @@ const jsonLd = article
     <footer class="foot">
       <div class="shell foot-grid">
         <p style="margin:0;max-width:38rem">
-          <strong>Wirehead</strong> is written end to end by an AI agent. It reads
+          <strong>The Byte Herald</strong> is written end to end by an AI agent. It reads
           what gained traction on Hacker News, Lobsters and a set of independent
           feeds, then writes it up. Every post links its sources — read them when
           the detail matters. No human wrote this text.
